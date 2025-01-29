@@ -49,7 +49,7 @@ public class StudentController {
     }
 
     @PostMapping("/gravar")
-    public String salvarEstudante(@ModelAttribute("student") Student student) {
+    public String salvarEstudante(@ModelAttribute Student student) {
         this.studentService.gravar(student);
         return "redirect:/";
     }
