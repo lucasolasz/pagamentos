@@ -3,59 +3,59 @@
     layout:decorate="~{/header}">
 
 <main layout:fragment="content">
-    <div class="row">
-        <div class="col-sm-10 mx-auto p-5">
 
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">Visitantes</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Novo estudante</li>
-                </ol>
-            </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Visitantes</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Novo estudante</li>
+        </ol>
+    </nav>
 
-            <div class="card">
-                <div class="card-body">
-                    <h2>Cadastro de estudante</h2>
-                    <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo estudante</p>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h2>Cadastro de estudante</h2>
+            <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo estudante</p>
 
-                    <form class="row g-3" action="#" th:action="@{/gravar}" th:object="${student}" method="post">
+            <form action="#" th:action="@{/gravar}" th:object="${student}" method="post">
 
-                        <div class="form-group">
-                            <input type="hidden" th:field="*{id}" class="form-control" id="id" />
+                <div class="row">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control" id="id" />
+                    </div>
+
+                    <div class="mb-3 col-4">
+                        <label for="name" class="form-label">Nome *</label>
+                        <input type="text" th:field="*{name}" class="form-control"
+                            th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" id="name"
+                            placeholder="Digite seu nome" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
                         </div>
+                    </div>
 
-                        <div class="mb-3 col-4">
-                            <label for="name" class="form-label">Nome *</label>
-                            <input type="text" th:field="*{name}" class="form-control"
-                                th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" id="name"
-                                placeholder="Digite seu nome" />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                            </div>
+                    <div class="mb-3 col-4">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="text" th:field="*{email}" class="form-control"
+                            th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" id="email"
+                            placeholder="Digite o email" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
                         </div>
-
-                        <div class="mb-3 col-4">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="text" th:field="*{email}" class="form-control"
-                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" id="email"
-                                placeholder="Digite o email" />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-                            </div>
-                        </div>
-                        <div class="mb-3 col-4">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" th:field="*{address}" class="form-control" id="address"
-                                placeholder="Enter address" />
-                        </div>
-
-                        <div class="p-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-
-                    </form>
+                    </div>
+                    <div class="mb-3 col-4">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" th:field="*{address}" class="form-control" id="address"
+                            placeholder="Enter address" />
+                    </div>
 
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
 </main>
