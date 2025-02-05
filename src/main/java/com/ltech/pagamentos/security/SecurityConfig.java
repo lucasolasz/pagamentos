@@ -1,42 +1,50 @@
 package com.ltech.pagamentos.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
 
-    // private final MyUserDetailsService myUserDetailsService;
-    // private final PasswordEncoder passwordEncoder;
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login", "/css**/**", "/resources**/**").permitAll()
+                        .requestMatchers("/new**/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true) // Define a página de login personalizada
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll());
 
-    // public SecurityConfig(MyUserDetailsService myUserDetailsService,
-    // PasswordEncoder passwordEncoder) {
-    // this.myUserDetailsService = myUserDetailsService;
-    // this.passwordEncoder = passwordEncoder;
-    // }
+        return http.build();
+    }
 
-    // @Bean
-    // public AuthenticationManager authManager(HttpSecurity http) throws Exception
-    // {
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
 
-    // AuthenticationManagerBuilder authBuilder =
-    // http.getSharedObject(AuthenticationManagerBuilder.class);
-    // authBuilder
-    // .userDetailsService(myUserDetailsService)
-    // .passwordEncoder(passwordEncoder);
-    // return authBuilder.build();
-    // }
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("admin")
+                .roles("ADMIN")
+                .build();
 
-    // @Bean
-    // public PasswordEncoder passwordEncoder() {
-    // return new BCryptPasswordEncoder();
-    // }
-
-    // @Override
-    // public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    // auth.inMemoryAuthentication()
-    // .withUser("admin")
-    // .password(passwordEncoder().encode("adminPassword")) // A senha agora está
-    // criptografada com BCrypt
-    // .roles("ADMIN");
-    // }
+        return new InMemoryUserDetailsManager(user, admin);
+    }
 }
