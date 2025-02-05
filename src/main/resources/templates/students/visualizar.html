@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{/header}">
+    layout:decorate="~{/index}">
 
 <main layout:fragment="content">
 
@@ -9,7 +9,7 @@
         <div class="card-header py-3">
             <h5 class="tituloIndex">Estudantes
                 <div style="float: right;">
-                    <a th:href="@{/novo}" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i>
+                    <a th:href="@{/novo}" class="btn btn-primary"><i class="fas fa-plus"></i>
                         Novo</a>
                 </div>
             </h5>
@@ -21,7 +21,7 @@
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" placeholder="Procurar pelo nome"
                         th:value="${search}">
-                    <button class="btn btn-primary">Pesquisar</button>
+                    <button class="btn btn-primary"><i class="fas fa-search"></i> Pesquisar</button>
                 </div>
             </form>
 
