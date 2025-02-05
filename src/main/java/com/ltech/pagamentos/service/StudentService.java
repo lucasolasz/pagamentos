@@ -34,8 +34,8 @@ public class StudentService {
         this.studentRepository.deleteById(id);
     }
 
-    public Page<Student> findByNameContains(String name, Pageable pageable) {
-        return this.studentRepository.findByNameContains(name, pageable);
+    public Page<Student> findByNameContainingIgnoreCase(String name, Pageable pageable) {
+        return this.studentRepository.findByNameContainingIgnoreCase(name, pageable);
     }
 
 }

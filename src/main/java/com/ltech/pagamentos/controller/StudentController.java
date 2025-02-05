@@ -34,7 +34,7 @@ public class StudentController {
             Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Student> studentsPage = this.studentService.findByNameContains(search, pageable);
+        Page<Student> studentsPage = this.studentService.findByNameContainingIgnoreCase(search, pageable);
 
         model.addAttribute("students", studentsPage.getContent());
         model.addAttribute("totalPages", studentsPage.getTotalPages());

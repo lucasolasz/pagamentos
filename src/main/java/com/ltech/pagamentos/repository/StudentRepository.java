@@ -8,6 +8,6 @@ import com.ltech.pagamentos.model.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    Page<Student> findByNameContains(String name, Pageable pageable);
+    Page<Student> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
 }

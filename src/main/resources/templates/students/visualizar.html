@@ -16,59 +16,57 @@
         </div>
 
         <div class="card-body">
+            <div class="table-responsive">
+                <table id="studentTable" class="table table-bordered" style="width:100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
 
-            <form method="get" th:action="@{/}" class="mb-3">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Procurar pelo nome"
-                        th:value="${search}">
-                    <button class="btn btn-primary"><i class="fas fa-search"></i> Pesquisar</button>
-                </div>
-            </form>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="student: ${students}">
-                        <td th:text="${student.id}"></td>
-                        <td th:text="${student.name}"></td>
-                        <td th:text="${student.email}"></td>
-                        <td th:text="${student.address}"></td>
-                        <td>
-                            <a th:href="@{/editar/{id}(id=${student.id})}" class="btn btn-warning">
+        <script>
+            $(document).ready(function () {
+                $('#studentTable').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "responsive": true,
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.13.5/i18n/pt-BR.json"
+                    },
+                    "ajax": {
+                        "url": "/students",
+                        "type": "GET"
+                    },
+                    "columns": [
+                        { "data": "id" },
+                        { "data": "name" },
+                        { "data": "email" },
+                        { "data": "address" },
+                        {
+                            "data": null, // Define como null pois será preenchido manualmente
+                            "orderable": false, // Impede ordenação para esta coluna
+                            "render": function (data, type, row) {
+                                // Retorna o HTML para os botões de ação, com href dinâmico
+                                return `
+                            <a href="/editar/${row.id}" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>
-                            <a th:href="@{/deletar/{id}(id=${student.id})}" class="btn btn-danger">
+                            <a href="/deletar/${row.id}" class="btn btn-danger">
                                 <i class="bi bi-arrow-up-circle-fill"></i> Deletar
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <nav th:if="${totalPages > 1}">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                        <a class="page-link" th:href="@{/(page=${currentPage - 1}, search=${search})}">Anterior</a>
-                    </li>
-                    <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
-                        th:classappend="${currentPage == pageNum} ? 'active'">
-                        <a class="page-link" th:href="@{/(page=${pageNum}, search=${search})}"
-                            th:text="${pageNum + 1}"></a>
-                    </li>
-                    <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/(page=${currentPage + 1}, search=${search})}">Próxima</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+                            </a>`;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
 
     </div>
 </main>
