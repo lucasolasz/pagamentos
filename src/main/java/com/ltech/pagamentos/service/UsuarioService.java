@@ -2,6 +2,9 @@ package com.ltech.pagamentos.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ltech.pagamentos.model.Roles;
@@ -16,12 +19,13 @@ public class UsuarioService {
 
     private final RoleRepository roleRepository;
 
-    // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.roleRepository = roleRepository;
-        // this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void gravar(Usuario usuario) throws Exception {
@@ -30,16 +34,15 @@ public class UsuarioService {
             throw new Exception("Este usuário já existe");
         }
 
-        // usuario.setPassword(this.passwordEncoder.encode(usuario.getPassword()));
-        usuario.setPassword(usuario.getPassword());
-        usuario.setActive(true);
+        usuario.setPassword(this.passwordEncoder.encode(usuario.getPassword()));
+        usuario.setEnabled(true);
         usuario.setRoles(this.addRoleToUser("USER"));
 
         this.usuarioRepository.save(usuario);
     }
 
     public List<Roles> addRoleToUser(String roleName) {
-        return this.roleRepository.findByRoleName(roleName);
+        return this.roleRepository.findByName(roleName);
     }
 
     public boolean checkIfUserExist(String username) {

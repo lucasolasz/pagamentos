@@ -29,7 +29,7 @@ public class Usuario {
 
     private String password;
 
-    private boolean active;
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Roles> roles = new ArrayList<>();

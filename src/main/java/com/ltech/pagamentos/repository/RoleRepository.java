@@ -8,5 +8,5 @@ import com.ltech.pagamentos.model.Roles;
 
 public interface RoleRepository extends JpaRepository<Roles, Long> {
 
-    List<Roles> findByRoleName(String roleName);
+    List<Roles> findByName(String name);
 }
