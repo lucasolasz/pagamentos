@@ -6,7 +6,7 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/}">Visitantes</a>
+            <li class="breadcrumb-item"><a th:href="@{/students}">Visitantes</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Novo estudante</li>
         </ol>
@@ -17,7 +17,7 @@
             <h2>Cadastro de estudante</h2>
             <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo estudante</p>
 
-            <form action="#" th:action="@{/gravar}" th:object="${student}" method="post">
+            <form action="#" th:action="@{/students/gravar}" th:object="${student}" method="post">
 
                 <div class="row">
                     <div class="form-group">
@@ -52,6 +52,7 @@
                 <div class="row">
                     <div class="col-4">
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/students}">Cancelar</a>
                     </div>
                 </div>
 

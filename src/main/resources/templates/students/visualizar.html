@@ -9,7 +9,7 @@
         <div class="card-header py-3">
             <h5 class="tituloIndex">Estudantes
                 <div style="float: right;">
-                    <a th:href="@{/novo}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                    <a th:href="@{/students/novo}" class="btn btn-primary"><i class="fas fa-plus"></i>
                         Novo</a>
                 </div>
             </h5>
@@ -41,7 +41,7 @@
                         "url": "https://cdn.datatables.net/plug-ins/1.13.5/i18n/pt-BR.json"
                     },
                     "ajax": {
-                        "url": "/students",
+                        "url": "/dataTable/students",
                         "type": "GET"
                     },
                     "columns": [
@@ -55,10 +55,10 @@
                             "render": function (data, type, row) {
                                 // Retorna o HTML para os botões de ação, com href dinâmico
                                 return `
-                            <a href="/editar/${row.id}" class="btn btn-warning">
+                            <a href="/students/editar/${row.id}" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>
-                            <a href="/deletar/${row.id}" class="btn btn-danger">
+                            <a href="/students/deletar/${row.id}" class="btn btn-danger">
                                 <i class="bi bi-arrow-up-circle-fill"></i> Deletar
                             </a>`;
                             }
