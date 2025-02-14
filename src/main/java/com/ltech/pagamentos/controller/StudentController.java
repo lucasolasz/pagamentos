@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ltech.pagamentos.model.Student;
@@ -18,6 +19,7 @@ import com.ltech.pagamentos.service.StudentService;
 import jakarta.validation.Valid;
 
 @Controller
+@RequestMapping("/students")
 public class StudentController {
 
     private final StudentService studentService;
@@ -26,7 +28,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String index(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
