@@ -15,7 +15,7 @@ import com.ltech.pagamentos.model.Student;
 import com.ltech.pagamentos.repository.StudentRepository;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/dataTable")
 public class DataTablesController {
 
     private final StudentRepository studentRepository;
@@ -24,7 +24,7 @@ public class DataTablesController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping
+    @GetMapping("/students")
     public Map<String, Object> getStudents(@RequestParam int draw, @RequestParam int start, @RequestParam int length,
             @RequestParam(value = "search[value]", required = false) String searchValue) {
 
