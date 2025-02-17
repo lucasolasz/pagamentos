@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,14 +26,18 @@ public class Usuario {
     private Long id;
 
     @Column(length = 30)
+    @NotEmpty(message = "{validation.notempty}")
     private String username;
 
+    @NotEmpty(message = "{validation.notempty}")
     private String password;
 
     private boolean enabled;
 
+    @NotEmpty(message = "{validation.notempty}")
     private String firstName;
 
+    @NotEmpty(message = "{validation.notempty}")
     private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)

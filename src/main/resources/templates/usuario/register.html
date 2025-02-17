@@ -17,22 +17,41 @@
             <h2>Cadastro de usuário</h2>
             <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo estudante</p>
 
-            <form action="#" th:action="@{/register}" th:object="${usuario}" method="post">
+            <form action="#" th:action="@{/usuarios/gravar}" th:object="${usuario}" method="post">
 
                 <div class="row">
                     <div class="mb-3 col-4">
-                        <label for="username">UserName</label>
-                        <input type="text" th:field="*{username}" class="form-control" id="username"
-                            placeholder="Enter username" />
-                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('username')}"
-                            th:errors="*{username}"></div>
+                        <label for="firstName">Nome: *</label>
+                        <input type="text" th:field="*{firstName}" class="form-control"
+                            th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''" id="firstName"
+                            placeholder="Digite seu nome" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}"
+                            th:errors="*{firstName}"></div>
+                    </div>
+
+                    <div class="mb-3 col-4">
+                        <label for="lastName">Sobrenome: *</label>
+                        <input type="text" th:field="*{lastName}" class="form-control"
+                            th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''" id="lastName"
+                            placeholder="Digite seu sobrenome" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4">
+                        <label for="username">Usuário: *</label>
+                        <input type="text" th:field="*{username}" class="form-control"
+                            th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''" id="username"
+                            placeholder="Nome de usuário" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                        </div>
                     </div>
                     <div class="mb-3 col-4">
-                        <label for="password">Password</label>
-                        <input type="password" th:field="*{password}" class="form-control" id="password"
-                            placeholder="Enter password" />
-                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('password')}"
-                            th:errors="*{password}">
+                        <label for="password">Senha: *</label>
+                        <input type="password" th:field="*{password}" class="form-control"
+                            th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" id="password"
+                            placeholder="Senha" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
                         </div>
                     </div>
                 </div>
