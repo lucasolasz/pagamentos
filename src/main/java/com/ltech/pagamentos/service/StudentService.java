@@ -1,16 +1,16 @@
 package com.ltech.pagamentos.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.ltech.pagamentos.model.Student;
+import com.ltech.pagamentos.padrao.ServiceCrud;
 import com.ltech.pagamentos.repository.StudentRepository;
 
 @Service
-public class StudentService {
+public class StudentService extends ServiceCrud<Student, Long> {
 
     private final StudentRepository studentRepository;
 
@@ -18,20 +18,9 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> recuperarTodos() {
-        return this.studentRepository.findAll();
-    }
-
-    public void gravar(Student student) {
-        this.studentRepository.save(student);
-    }
-
-    public Student recuperarPorId(Long id) {
-        return this.studentRepository.findById(id).orElse(null);
-    }
-
-    public void deletarPorId(Long id) {
-        this.studentRepository.deleteById(id);
+    @Override
+    protected JpaRepository<Student, Long> getRepository() {
+        return studentRepository;
     }
 
     public Page<Student> findByNameContainingIgnoreCase(String name, Pageable pageable) {
