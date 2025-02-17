@@ -31,7 +31,15 @@ public class Usuario {
 
     private boolean enabled;
 
+    private String firstName;
+
+    private String lastName;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Roles> roles = new ArrayList<>();
+
+    public String getFullname() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
 
 }

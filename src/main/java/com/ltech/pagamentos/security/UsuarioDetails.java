@@ -53,4 +53,8 @@ public class UsuarioDetails implements UserDetails {
         return usuario.isEnabled();
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
 }
