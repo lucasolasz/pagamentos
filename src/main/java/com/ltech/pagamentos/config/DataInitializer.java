@@ -36,9 +36,9 @@ public class DataInitializer implements CommandLineRunner {
         if (this.roleRepository.count() == 0) {
 
             Roles roles1 = new Roles();
-            roles1.setName("ADMIN");
+            roles1.setName("ROLE_ADMIN");
             Roles roles2 = new Roles();
-            roles2.setName("USER");
+            roles2.setName("ROLE_USER");
 
             this.roleRepository.save(roles1);
             this.roleRepository.save(roles2);
@@ -55,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setEnabled(true);
             admin.setRoles(roleAdm);
 
-            List<Roles> roleUser = this.roleRepository.findByName("USER");
+            List<Roles> roleUser = this.roleRepository.findByName("ROLE_USER");
             Usuario user = new Usuario();
 
             user.setUsername("user");

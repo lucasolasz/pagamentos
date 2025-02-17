@@ -18,7 +18,8 @@ public class SecurityConfig {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers("/login", "/css**/**", "/resources**/**").permitAll()
-                                                .requestMatchers("/new**/**").hasRole("ADMIN")
+                                                .requestMatchers("/usuarios/novo**/**")
+                                                .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
