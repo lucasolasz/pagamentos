@@ -23,13 +23,14 @@ public class SecurityConfig {
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
-                                                .defaultSuccessUrl("/", true) // Define a página de login personalizada
+                                                .defaultSuccessUrl("/", true)// Define a página de login personalizada
+                                                .failureUrl("/login?error=true")
                                                 .permitAll())
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")
                                                 .logoutSuccessUrl("/login?logout")
                                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-                                                .logoutSuccessUrl("/login")
+                                                .logoutSuccessUrl("/login?logout=true")
                                                 .permitAll());
 
                 return http.build();

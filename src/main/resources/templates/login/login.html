@@ -6,20 +6,36 @@
 <body>
 
     <div class="container text-center">
-        <form class="form-signin" th:action="@{/login}" method="post">
 
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div class="d-flex justify-content-center">
 
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="text" name="username" id="inputEmail" class="form-control mb-3" placeholder="Email address"
-                required autofocus>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
-                required>
 
-            <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Sign in</button>
+            <form class="form-signin" th:action="@{/login}" method="post">
 
-        </form>
+                <h1 class="h3 m-5 font-weight-normal">Pagamentos</h1>
+
+                <label for="inputEmail" class="sr-only">Usuário</label>
+                <input type="text" name="username" id="inputEmail" class="form-control mb-3" placeholder="Email address"
+                    required autofocus>
+                <label for="inputPassword" class="sr-only">Senha</label>
+                <input type="password" name="password" id="inputPassword" class="form-control mb-5"
+                    placeholder="Password" required>
+
+                <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">Entrar</button>
+
+                <!-- Exibe mensagem de erro -->
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Email ou senha incorretos. Por favor, tente novamente.
+                </div>
+
+                <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                    Você foi desconectado com sucesso.
+                </div>
+            </form>
+
+
+
+        </div>
     </div>
 
 </body>
