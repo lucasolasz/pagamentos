@@ -39,7 +39,7 @@ public class StudentController extends CrudController<Student, StudentService> {
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
 
-        return "students/visualizar";
+        return this.getViewPathOperacaoVisualizar();
 
     }
 

@@ -39,12 +39,16 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return service;
     }
 
-    // public String getRedirectVisualizar() {
-    // return "redirect:/" + this.viewPath;
-    // }
+    public String getRedirectPathOrigem() {
+        return "redirect:/" + this.viewPath;
+    }
 
     public String getViewPathOperacaoInclusao() {
         return this.viewPath + "/incluir";
+    }
+
+    public String getViewPathOperacaoVisualizar() {
+        return this.viewPath + "/visualizar";
     }
 
     @GetMapping("/incluir")
@@ -61,7 +65,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     @PostMapping("/gravar")
     public String gravar(@Valid @ModelAttribute("objeto") T entity, BindingResult result, Model model) {
         service.gravar(entity);
-        return "redirect:/" + this.viewPath;
+        return this.getRedirectPathOrigem();
     }
 
     @GetMapping("/editar/{id}")
@@ -74,6 +78,6 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     @GetMapping("/deletar/{id}")
     public String deletar(@PathVariable("id") Long id, Model model) {
         service.deletarPorId(id);
-        return "redirect:/" + this.viewPath;
+        return this.getRedirectPathOrigem();
     }
 }
