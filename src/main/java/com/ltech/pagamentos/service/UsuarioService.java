@@ -2,16 +2,18 @@ package com.ltech.pagamentos.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ltech.pagamentos.model.Roles;
 import com.ltech.pagamentos.model.Usuario;
+import com.ltech.pagamentos.padrao.ServiceCrud;
 import com.ltech.pagamentos.repository.RoleRepository;
 import com.ltech.pagamentos.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService {
+public class UsuarioService extends ServiceCrud<Usuario> {
 
     private final UsuarioRepository usuarioRepository;
 
@@ -19,25 +21,33 @@ public class UsuarioService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
+            RoleRepository roleRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
-    public void gravar(Usuario usuario) throws Exception {
-
-        if (this.checkIfUserExist(usuario.getUsername())) {
-            throw new Exception("Este usuário já existe");
-        }
-
-        usuario.setPassword(this.passwordEncoder.encode(usuario.getPassword()));
-        usuario.setEnabled(true);
-        usuario.setRoles(this.addRoleToUser("USER"));
-
-        this.usuarioRepository.save(usuario);
+    @Override
+    protected JpaRepository<Usuario, Long> getRepository() {
+        return usuarioRepository;
     }
+
+    @Override
+    public void ajusteAntesGravacao(Usuario entity) {
+        entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
+        entity.setEnabled(true);
+        entity.setRoles(this.addRoleToUser("USER"));
+        super.ajusteAntesGravacao(entity);
+    }
+
+    // @Override
+    // public Usuario gravar(Usuario entity) {
+    // entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
+    // entity.setEnabled(true);
+    // entity.setRoles(this.addRoleToUser("USER"));
+    // return super.gravar(entity);
+    // }
 
     public List<Roles> addRoleToUser(String roleName) {
         return this.roleRepository.findByName(roleName);

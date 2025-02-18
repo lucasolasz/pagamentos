@@ -3,46 +3,33 @@ package com.ltech.pagamentos.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ltech.pagamentos.model.Usuario;
+import com.ltech.pagamentos.padrao.CrudController;
 import com.ltech.pagamentos.service.UsuarioService;
+import com.ltech.pagamentos.util.MensagemUtil;
 
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class UsuarioController extends CrudController<Usuario, UsuarioService> {
 
-    private final UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    public UsuarioController(UsuarioService service) {
+        super("usuarios", service);
     }
 
-    @GetMapping("/novo")
-    public String register(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "usuario/register";
-    }
-
-    @PostMapping("/gravar")
-    public String salvarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult result) {
-
+    @Override
+    public String gravar(@Valid Usuario entity, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "usuario/register";
+            return this.getViewPathOperacaoInclusao();
+        } else if (this.getService().checkIfUserExist(entity.getUsername())) {
+            MensagemUtil.adicionarMensagem(model, "Já existe cadastro com este nome de usuário",
+                    MensagemUtil.COR_ALERTA);
+            return this.getViewPathOperacaoInclusao();
         }
-
-        try {
-            this.usuarioService.gravar(usuario);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return "redirect:/";
+        return super.gravar(entity, result, model);
     }
 
 }
