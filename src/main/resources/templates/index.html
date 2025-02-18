@@ -11,7 +11,7 @@
         <!-- Contêiner do Toast -->
         <div id="toastContainer" style="position: fixed; top: 30; right: 20;">
             <!-- Toast -->
-            <div id="toast" class="toast bg-gradient-warning" role="alert" aria-live="assertive" aria-atomic="true"
+            <div id="toast" th:class="${corMsg}" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-delay="5000">
                 <div class="toast-header">
                     <strong class="mr-auto">Mensagem</strong>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ltech.pagamentos.model.Student;
 import com.ltech.pagamentos.padrao.CrudController;
 import com.ltech.pagamentos.service.StudentService;
+import com.ltech.pagamentos.util.MensagemUtil;
 
 import jakarta.validation.Valid;
 
@@ -48,7 +49,7 @@ public class StudentController extends CrudController<Student, StudentService> {
         if (result.hasErrors()) {
             return this.getViewPathOperacaoInclusao();
         } else if (this.getService().jaExisteEmailCadastrado(entity.getEmail())) {
-            model.addAttribute("msg", "Já existe cadastro com este email");
+            MensagemUtil.adicionarMensagem(model, "Já existe cadastro para este email", MensagemUtil.COR_ALERTA);
             return this.getViewPathOperacaoInclusao();
         }
         return super.gravar(entity, result, model);
