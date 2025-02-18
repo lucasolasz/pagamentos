@@ -30,4 +30,8 @@ public abstract class ServiceCrud<T> {
     public void deletarPorId(Long id) {
         getRepository().deleteById(id);
     }
+
+    public void ajusteAntesGravacao(T entity) {
+        this.gravar(entity);
+    }
 }

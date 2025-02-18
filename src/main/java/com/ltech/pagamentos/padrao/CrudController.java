@@ -64,6 +64,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
 
     @PostMapping("/gravar")
     public String gravar(@Valid @ModelAttribute("objeto") T entity, BindingResult result, Model model) {
+        service.ajusteAntesGravacao(entity);
         service.gravar(entity);
         return this.getRedirectPathOrigem();
     }
