@@ -7,25 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ltech.pagamentos.model.Student;
+import com.ltech.pagamentos.padrao.CrudController;
 import com.ltech.pagamentos.service.StudentService;
 
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/students")
-public class StudentController {
-
-    private final StudentService studentService;
+public class StudentController extends CrudController<Student, StudentService> {
 
     public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+        super("students", studentService);
     }
 
     @GetMapping
@@ -36,7 +32,7 @@ public class StudentController {
             Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Student> studentsPage = this.studentService.findByNameContainingIgnoreCase(search, pageable);
+        Page<Student> studentsPage = this.getService().findByNameContainingIgnoreCase(search, pageable);
 
         model.addAttribute("students", studentsPage.getContent());
         model.addAttribute("totalPages", studentsPage.getTotalPages());
@@ -47,34 +43,15 @@ public class StudentController {
 
     }
 
-    @GetMapping("/novo")
-    public String novoEstudante(Model model) {
-        model.addAttribute("student", new Student());
-        return "students/cadastrar";
-    }
-
-    @PostMapping("/gravar")
-    public String salvarEstudante(@Valid @ModelAttribute Student student, BindingResult result) {
-
+    @Override
+    public String gravar(@Valid Student entity, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "students/cadastrar";
+            return this.getViewPathOperacaoInclusao();
+        } else if (this.getService().jaExisteEmailCadastrado(entity.getEmail())) {
+            model.addAttribute("msg", "Já existe cadastro com este email");
+            return this.getViewPathOperacaoInclusao();
         }
-
-        this.studentService.gravar(student);
-        return "redirect:/";
-    }
-
-    @GetMapping("/editar/{id}")
-    public String editarEstudante(@PathVariable("id") Long id, Model model) {
-        Student student = this.studentService.recuperarPorId(id);
-        model.addAttribute("student", student);
-        return "students/cadastrar";
-    }
-
-    @GetMapping("/deletar/{id}")
-    public String editarEstudante(@PathVariable("id") Long id) {
-        this.studentService.deletarPorId(id);
-        return "redirect:/";
+        return super.gravar(entity, result, model);
     }
 
 }
