@@ -1,0 +1,11 @@
+   /* Estilo para o Toast */
+   #toastContainer {
+       position: fixed;
+       /* Fixa o Toast na tela */
+       top: 20px;
+       /* Distância do topo */
+       right: 20px;
+       /* Distância da direita */
+       z-index: 1050;
+       /* Garante que o Toast fique acima de outros elementos */
+   }
