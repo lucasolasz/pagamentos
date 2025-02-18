@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class ServiceCrud<T, ID> {
+public abstract class ServiceCrud<T> {
 
-    protected abstract JpaRepository<T, ID> getRepository();
+    protected abstract JpaRepository<T, Long> getRepository();
 
     public List<T> recuperarTodos() {
         return getRepository().findAll();
@@ -23,11 +23,11 @@ public abstract class ServiceCrud<T, ID> {
         return getRepository().save(entity);
     }
 
-    public Optional<T> recuperarPorId(ID id) {
+    public Optional<T> recuperarPorId(Long id) {
         return getRepository().findById(id);
     }
 
-    public void deletarPorId(ID id) {
+    public void deletarPorId(Long id) {
         getRepository().deleteById(id);
     }
 }

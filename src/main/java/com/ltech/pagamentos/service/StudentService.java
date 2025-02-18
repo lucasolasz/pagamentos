@@ -10,7 +10,7 @@ import com.ltech.pagamentos.padrao.ServiceCrud;
 import com.ltech.pagamentos.repository.StudentRepository;
 
 @Service
-public class StudentService extends ServiceCrud<Student, Long> {
+public class StudentService extends ServiceCrud<Student> {
 
     private final StudentRepository studentRepository;
 
@@ -25,6 +25,10 @@ public class StudentService extends ServiceCrud<Student, Long> {
 
     public Page<Student> findByNameContainingIgnoreCase(String name, Pageable pageable) {
         return this.studentRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
+
+    public boolean jaExisteEmailCadastrado(String email) {
+        return !this.studentRepository.findByEmailContainingIgnoreCase(email).isEmpty();
     }
 
 }
