@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ltech.pagamentos.model.Condomino;
 import com.ltech.pagamentos.model.Student;
-import com.ltech.pagamentos.model.Unidade;
 import com.ltech.pagamentos.repository.CondominoRepository;
 import com.ltech.pagamentos.repository.StudentRepository;
-import com.ltech.pagamentos.repository.UnidadeRepository;
 
 @RestController
 @RequestMapping("/dataTable")
