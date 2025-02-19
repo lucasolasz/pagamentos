@@ -51,6 +51,11 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return this.viewPath + "/visualizar";
     }
 
+    @GetMapping
+    public String index(Model model) {
+        return this.getViewPathOperacaoVisualizar();
+    }
+
     @GetMapping("/incluir")
     public String incluir(Model model) {
         try {
@@ -59,7 +64,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         } catch (Exception e) {
             throw new RuntimeException("Falha ao criar instância da entidade", e);
         }
-        return getViewPathOperacaoInclusao();
+        return this.getViewPathOperacaoInclusao();
     }
 
     @PostMapping("/gravar")

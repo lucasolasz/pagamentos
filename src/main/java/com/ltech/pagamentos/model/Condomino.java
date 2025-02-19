@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,14 +18,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Condominos {
+public class Condomino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String codUnidade;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Unidade unidade;
 
     private String nomeCondomino;
 
@@ -50,7 +53,7 @@ public class Condominos {
 
     private String celular;
 
-    private String profisao;
+    private String profissao;
 
     private String enderecoTrabalho;
 
