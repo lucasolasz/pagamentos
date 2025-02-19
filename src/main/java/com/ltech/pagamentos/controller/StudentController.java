@@ -25,25 +25,6 @@ public class StudentController extends CrudController<Student, StudentService> {
         super("students", studentService);
     }
 
-    @GetMapping
-    public String index(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "") String search,
-            Model model) {
-
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Student> studentsPage = this.getService().findByNameContainingIgnoreCase(search, pageable);
-
-        model.addAttribute("students", studentsPage.getContent());
-        model.addAttribute("totalPages", studentsPage.getTotalPages());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("search", search);
-
-        return this.getViewPathOperacaoVisualizar();
-
-    }
-
     @Override
     public String gravar(@Valid Student entity, BindingResult result, Model model) {
         if (result.hasErrors()) {

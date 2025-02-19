@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/index}">
+
+<main layout:fragment="content">
+
+    <div class="card shadow mb-4">
+
+        <!-- <div class="card-header py-3">
+            <h5 class="tituloIndex">Estudantes
+                <div style="float: right;">
+                    <a th:href="@{/students/incluir}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                        Novo</a>
+                </div>
+            </h5>
+        </div> -->
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="dataTable" class="table table-bordered" style="width:100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Unidade</th>
+                            <th scope="col">Nome Condômino</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "responsive": true,
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.13.5/i18n/pt-BR.json"
+                    },
+                    "ajax": {
+                        "url": "/dataTable/condominos",
+                        "type": "GET"
+                    },
+                    "columns": [
+                        { "data": "unidade.codUnidade" },
+                        { "data": "nomeCondomino" },
+                        {
+                            "data": null, // Define como null pois será preenchido manualmente
+                            "orderable": false, // Impede ordenação para esta coluna
+                            "render": function (data, type, row) {
+                                // Retorna o HTML para os botões de ação, com href dinâmico
+                                return `
+                            <a href="/condominos/editar/${row.id}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+                            <a href="/condominos/deletar/${row.id}" class="btn btn-danger">
+                                <i class="bi bi-arrow-up-circle-fill"></i> Deletar
+                            </a>`;
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
+
+    </div>
+</main>
+
+</html>
