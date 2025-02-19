@@ -16,14 +16,14 @@ import com.ltech.pagamentos.repository.UsuarioRepository;
 
 @Component
 @Profile("dev")
-public class DataInitializer implements CommandLineRunner {
+public class DataInitializerInicial implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JdbcTemplate jdbcTemplate;
 
-    public DataInitializer(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
+    public DataInitializerInicial(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
             RoleRepository roleRepository, JdbcTemplate jdbcTemplate) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
@@ -52,6 +52,8 @@ public class DataInitializer implements CommandLineRunner {
 
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("123"));
+            admin.setFirstName("Administrador");
+            admin.setLastName("adm");
             admin.setEnabled(true);
             admin.setRoles(roleAdm);
 
@@ -60,6 +62,8 @@ public class DataInitializer implements CommandLineRunner {
 
             user.setUsername("user");
             user.setPassword(passwordEncoder.encode("123"));
+            user.setFirstName("Usuario");
+            user.setLastName("comum");
             user.setEnabled(true);
             user.setRoles(roleUser);
 
