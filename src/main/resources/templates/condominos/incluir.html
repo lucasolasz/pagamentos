@@ -20,19 +20,18 @@
 
             <form th:action="@{/condominos/gravar}" th:object="${objeto}" method="post">
 
+                <input type="hidden" th:field="*{id}" class="form-control" id="id" />
+                <input type="hidden" th:field="*{unidade}" class="form-control" id="unidade" />
+
                 <div class="row">
                     <div class="col-4 form-group">
                         <label for="unidade">Unidade:</label>
-                        <input type="text" th:field="*{unidade.codUnidade}" class="form-control" id="unidade"
-                            readonly />
+                        <input type="text" th:value="${objeto.unidade.codUnidade}" class="form-control" id="unidade"
+                            disabled />
                     </div>
                 </div>
 
                 <div class="row">
-
-                    <div class="form-group">
-                        <input type="hidden" th:field="*{id}" class="form-control" id="id" />
-                    </div>
 
                     <div class="mb-3 col-4 form-group">
                         <label for="nomeCondomino">Nome Condômino *</label>
