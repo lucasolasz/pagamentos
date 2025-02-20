@@ -56,11 +56,15 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return this.getViewPathOperacaoVisualizar();
     }
 
+    public void cargaAuxiliarObjetos(Model model) {
+    }
+
     @GetMapping("/incluir")
     public String incluir(Model model) {
         try {
             T entity = entityClass.getDeclaredConstructor().newInstance(); // Cria uma nova instância da entidade
             model.addAttribute("objeto", entity);
+            this.cargaAuxiliarObjetos(model);
         } catch (Exception e) {
             throw new RuntimeException("Falha ao criar instância da entidade", e);
         }
@@ -78,6 +82,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     public String editar(@PathVariable("id") Long id, Model model) {
         Optional<T> entity = service.recuperarPorId(id);
         model.addAttribute("objeto", entity.orElseThrow(() -> new RuntimeException("Entidade não encontrada")));
+        this.cargaAuxiliarObjetos(model);
         return this.getViewPathOperacaoInclusao();
     }
 
