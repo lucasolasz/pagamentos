@@ -64,6 +64,22 @@
             </div>
         </li>
 
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCondominos"
+                aria-expanded="true" aria-controls="collapseCondominos">
+                <i class="fas fa-users"></i>
+                <span>Condôminos</span>
+            </a>
+            <div id="collapseCondominos" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" th:href="@{/condominos/incluir}">Novo Condômino</a>
+                    <a class="collapse-item" th:href="@{/condominos}">Visualizar Condôminos</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 

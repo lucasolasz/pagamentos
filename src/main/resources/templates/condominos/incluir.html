@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/index}">
+
+<main layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/condominos}">Condôminos</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Novo Condômino</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <h2>Cadastro de Condômino</h2>
+            <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo condômino</p>
+
+            <form th:action="@{/condominos/gravar}" th:object="${objeto}" method="post">
+
+                <div class="row">
+                    <div class="col-4 form-group">
+                        <label for="unidade">Unidade:</label>
+                        <input type="text" th:field="*{unidade.codUnidade}" class="form-control" id="unidade"
+                            readonly />
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" class="form-control" id="id" />
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="nomeCondomino">Nome Condômino *</label>
+                        <input type="text" th:field="*{nomeCondomino}" class="form-control"
+                            th:classappend="${#fields.hasErrors('nomeCondomino')}? 'is-invalid' : ''" id="nomeCondomino"
+                            placeholder="Digite o nome do condômino" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeCondomino')}"
+                            th:errors="*{nomeCondomino}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="numIdentidade">Identidade *</label>
+                        <input type="text" th:field="*{numIdentidade}" class="form-control"
+                            th:classappend="${#fields.hasErrors('numIdentidade')} ? 'is-invalid' : ''"
+                            id="numIdentidade" placeholder="Digite o número da identidade" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('numIdentidade')}"
+                            th:errors="*{numIdentidade}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="cpf">CPF: *</label>
+                        <input type="text" th:field="*{cpf}" class="form-control"
+                            th:classappend="${#fields.hasErrors('cpf')} ? 'is-invalid' : ''" id="cpf"
+                            placeholder="Digite o número do cpf" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="dataNascimento">Data de Nascimento: *</label>
+                        <input type="text" th:field="*{dataNascimento}" id="dataNascimento"
+                            class="form-control datePicker" placeholder="Escolha ou digite a data de nascimento"
+                            data-mask="00/00/0000" />
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="telefone">Telefone: *</label>
+                        <input type="text" th:field="*{telefone}" class="form-control"
+                            th:classappend="${#fields.hasErrors('telefone')} ? 'is-invalid' : ''" id="telefone"
+                            placeholder="Digite o número do telefone" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="celular">Celular: *</label>
+                        <input type="text" th:field="*{celular}" class="form-control"
+                            th:classappend="${#fields.hasErrors('celular')} ? 'is-invalid' : ''" id="celular"
+                            placeholder="Digite o número do celular" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 col-4 form-group">
+                        <label for="profissao">Profissão:</label>
+                        <input type="text" th:field="*{profissao}" class="form-control" id="profissao"
+                            placeholder="Digite a sua profissão" />
+                    </div>
+
+                    <div class="mb-3 col-8">
+                        <label for="enderecoTrabalho" class="form-label">Endereço do Trabalho: </label>
+                        <input type="text" th:field="*{enderecoTrabalho}" class="form-control" id="enderecoTrabalho"
+                            placeholder="Digite o endereço do trabalho" />
+                    </div>
+
+                    <div class="col-4 form-group">
+                        <label for="banco">Banco:</label>
+                        <select class="form-control" id="banco" th:field="*{banco}">
+                            <option value="">Selecione um banco</option>
+                            <option th:each="banco : ${listaBancos}" th:value="${banco.id}"
+                                th:text="${banco.nomeBanco}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-4 form-group">
+                        <label for="situacaoCondomino">Situação Condômino:</label>
+                        <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}">
+                            <option value="">Selecione uma situação</option>
+                            <option th:each="situacao : ${listaSituacaoCondomino}" th:value="${situacao.id}"
+                                th:text="${situacao.descricao}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-4 form-group">
+                        <label for="numContrato">Número do Contrato: </label>
+                        <input type="text" th:field="*{numContrato}" class="form-control" id="numContrato"
+                            placeholder="Digite o número do contrato" />
+                    </div>
+
+                    <div class="col-4 form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="contratoDeGaveta"
+                                th:field="*{contratoDeGaveta}">
+                            <label class="form-check-label" for="contratoDeGaveta">
+                                Contrato de Gaveta
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-4 form-group">
+                        <label for="nomeProprietario">Nome Proprietário: *</label>
+                        <input type="text" th:field="*{nomeProprietario}" class="form-control"
+                            th:classappend="${#fields.hasErrors('nomeProprietario')}? 'is-invalid' : ''"
+                            id="nomeProprietario" placeholder="Digite o nome do proprietário" />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeProprietario')}"
+                            th:errors="*{nomeProprietario}">
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <label for="enderecoProprietario">Endereço do Proprietário: </label>
+                        <input type="text" th:field="*{enderecoProprietario}" class="form-control"
+                            id="enderecoProprietario" placeholder="Digite o endereço do proprietário" />
+                    </div>
+
+
+                    <div class="col-12 form-group">
+                        <label for="outrosResidentes">Outros Residentes:</label>
+                        <textarea type="text" th:field="*{outrosResidentes}" class="form-control" id="outrosResidentes"
+                            placeholder="Digite o nome do condômino" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 mb-3 form-group">
+                        <button type="submit" class="btn btn-primary">Gravar</button>
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/condominos}">Cancelar</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</main>
+
+</html>

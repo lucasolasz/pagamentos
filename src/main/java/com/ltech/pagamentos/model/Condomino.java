@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,13 +23,13 @@ public class Condomino {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(unique = true)
     private Unidade unidade;
 
     private String nomeCondomino;
 
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String outrosResidentes;
 
     @ManyToOne
@@ -57,7 +56,7 @@ public class Condomino {
 
     private String enderecoTrabalho;
 
-    private String nomeProprietário;
+    private String nomeProprietario;
 
     private String enderecoProprietario;
 
