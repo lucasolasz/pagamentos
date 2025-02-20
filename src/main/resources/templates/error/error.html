@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/index}">
+
+<main layout:fragment="content">
+
+    <div class="text-center">
+        <h1 class="mx-auto" data-text="Erro"><i class="fas fa-exclamation-triangle"></i> Erro</h1>
+    </div>
+
+    <div th:if="${errorMessage}">
+        <h4>Causa:</h4>
+        <div th:if="${cause}" class="mb-3">
+            <small th:text="${cause}" class="font-weight-bold text-dark"></small>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                Exibir detalhes do erro <i class="fas fa-arrow-down"></i>
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <small th:text="${stackTrace}"></small>
+            </div>
+        </div>
+    </div>
+
+    <a th:href="@{/}">&larr; Home</a>
+
+
+
+</main>
+
+</html>
