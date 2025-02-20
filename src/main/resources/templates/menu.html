@@ -234,7 +234,13 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2021</span>
+                    <span class="mb-1"> Copyright &copy; <span
+                            th:text="${@environment.getProperty('spring.application.name')}"></span>. Todos os direitos
+                        reservados.
+                    </span>
+
+                    <span><a href="#">Contato</a> |
+                        <a href="#" target="_blank">Facebook</a> | <a href="#" target="_blank">Twitter</a></span>
                 </div>
             </div>
         </footer>
