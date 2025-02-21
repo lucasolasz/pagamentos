@@ -12,7 +12,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <img th:src="@{/img/favicon.ico}" alt="Logo" height="30" width="30">
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3" th:text="${@environment.getProperty('spring.application.name')}"></div>
         </a>
 
         <!-- Divider -->
@@ -74,7 +74,7 @@
             <div id="collapseCondominos" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" th:href="@{/condominos/incluir}">Novo Condômino</a>
+                    <!-- <a class="collapse-item" th:href="@{/condominos/incluir}">Novo Condômino</a> -->
                     <a class="collapse-item" th:href="@{/condominos}">Visualizar Condôminos</a>
                 </div>
             </div>
