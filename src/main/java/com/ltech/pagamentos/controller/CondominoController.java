@@ -26,6 +26,7 @@ public class CondominoController extends CrudController<Condomino, CondominoServ
 
     @Override
     public void cargaAuxiliarObjetos(Model model) {
+        model.addAttribute("textoOperacaoAtual", this.getTextoOperacaoAtual());
         model.addAttribute("listaBancos", bancoService.recuperarTodos());
         model.addAttribute("listaSituacaoCondomino", situacaoCondominoService.recuperarTodos());
     }

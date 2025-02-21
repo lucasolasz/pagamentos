@@ -15,8 +15,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-body">
-            <h2>Cadastro de Condômino</h2>
-            <p class="mb-3 text-muted">Preencha o formulário abaixo para cadastrar um novo condômino</p>
+            <h2 th:text="${textoOperacaoAtual} + ' ' + Condômino"></h2>
 
             <form th:action="@{/condominos/gravar}" th:object="${objeto}" method="post">
 
