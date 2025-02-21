@@ -98,7 +98,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         Optional<T> entity = service.recuperarPorId(id);
 
         if (entity.isPresent()) {
-            model.addAttribute("objeto", entity);
+            model.addAttribute("objeto", entity.get());
             this.cargaAuxiliarObjetos(model);
             return this.getViewPathOperacaoInclusao();
         }
