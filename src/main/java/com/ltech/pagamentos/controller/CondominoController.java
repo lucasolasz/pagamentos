@@ -19,14 +19,13 @@ public class CondominoController extends CrudController<Condomino, CondominoServ
 
     public CondominoController(CondominoService condominoService, BancoService bancoService,
             SituacaoCondominoService situacaoCondominoService) {
-        super("condominos", condominoService);
+        super("condominos", condominoService, "Condôminos");
         this.bancoService = bancoService;
         this.situacaoCondominoService = situacaoCondominoService;
     }
 
     @Override
     public void cargaAuxiliarObjetos(Model model) {
-        model.addAttribute("textoOperacaoAtual", this.getTextoOperacaoAtual());
         model.addAttribute("listaBancos", bancoService.recuperarTodos());
         model.addAttribute("listaSituacaoCondomino", situacaoCondominoService.recuperarTodos());
     }

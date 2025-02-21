@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/index}">
+
+<main layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{${viewPath}}" th:text="${nomeTela}"></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Novo Condômino</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <h2 th:text="${textoOperacaoAtual} + ' ' + ${nomeTela}"></h2>
+
+            <form th:action="@{/condominos/gravar}" th:object="${objeto}" method="post">
+
+                <section layout:fragment="camposInputFormulario">
+                    <!-- Conteúdo será inserido aqui -->
+                </section>
+
+                <div class="row">
+                    <div th:if="${!somenteLeitura}" class="col-4 mb-3 form-group">
+                        <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Gravar</button>
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/condominos}"><i
+                                class="fas fa-arrow-circle-left"></i> Cancelar</a>
+                    </div>
+                    <div th:if="${somenteLeitura}" class="col-4 mb-3 form-group">
+                        <a class="btn btn-warning" type="button" th:href="@{'/condominos/alterar/' + ${objeto.id}}"><i
+                                class="far fa-edit"></i> Alterar</a>
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/condominos}"><i
+                                class="fas fa-arrow-circle-left"></i> Cancelar</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</main>
+
+</html>

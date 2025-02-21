@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 public class StudentController extends CrudController<Student, StudentService> {
 
     public StudentController(StudentService studentService) {
-        super("students", studentService);
+        super("students", studentService, "Estudantes");
     }
 
     @Override

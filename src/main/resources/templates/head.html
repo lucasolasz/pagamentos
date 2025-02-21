@@ -8,7 +8,7 @@
     <link rel="icon" th:href="@{/img/favicon.ico}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pagamentos</title>
+    <title th:text="${nomeTela != null ? nomeTela : @environment.getProperty('spring.application.name')}"></title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 
     <!-- Custom fonts for this template-->

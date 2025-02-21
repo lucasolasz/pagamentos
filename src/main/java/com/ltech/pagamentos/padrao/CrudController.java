@@ -15,7 +15,11 @@ import jakarta.validation.Valid;
 
 public abstract class CrudController<T, S extends ServiceCrud<T>> {
 
-    private final String viewPath; // Caminho base das views (ex: "students")
+    /**
+     * Caminho base das views (ex: "students")
+     */
+    private final String viewPath;
+    private final String nomeTela;
     private final Class<T> entityClass;
     private S service;
 
@@ -24,10 +28,11 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
      */
     private int operacaoAtual;
 
-    public CrudController(String viewPath, S service) {
+    public CrudController(String viewPath, S service, String nomeTela) {
         this.viewPath = viewPath;
         this.entityClass = getEntityClass();
         this.service = service;
+        this.nomeTela = nomeTela;
     }
 
     // Método para capturar a classe da entidade (T) usando reflexão
@@ -38,30 +43,58 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return (Class<T>) paramType.getActualTypeArguments()[0]; // Retorna a classe T
     }
 
-    // Método para acessar o serviço a partir das classes filhas
+    /*
+     * Método para acessar o serviço a partir das classes filhas
+     */
     protected S getService() {
         return service;
     }
 
+    public String getNomeTela() {
+        return this.nomeTela;
+    }
+
+    public String getViewPath() {
+        return "/" + this.viewPath;
+    }
+
+    /**
+     * Redireciona para o path origem
+     * 
+     * @return "/"
+     */
     public String getRedirectPathOrigem() {
         return "redirect:/" + this.viewPath;
     }
 
+    /**
+     * Carrega a view de inclusão
+     * 
+     * @return path + /incluir
+     */
     public String getViewPathOperacaoInclusao() {
         return this.viewPath + "/incluir";
     }
 
+    /**
+     * Carrega a view de visualização
+     * 
+     * @return path + /visualizar
+     */
     public String getViewPathOperacaoVisualizar() {
         return this.viewPath + "/visualizar";
     }
 
-    @GetMapping
-    public String index(Model model) {
-        this.operacaoAtual = OperacaoCrud.OPE_PESQUISA;
-        return this.getViewPathOperacaoVisualizar();
-    }
-
-    public void cargaAuxiliarObjetos(Model model) {
+    /**
+     * Método que controla se a página deve ser exibida no modo de somente
+     * leitura.
+     */
+    public Boolean getSomenteLeitura() {
+        if (operacaoAtual == OperacaoCrud.OPE_EDICAO)
+            return false;
+        if (operacaoAtual == OperacaoCrud.OPE_INCLUSAO)
+            return false;
+        return true;
     }
 
     /**
@@ -71,6 +104,23 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
      */
     public String getTextoOperacaoAtual() {
         return OperacaoCrud.getTextoOperacao(operacaoAtual);
+    }
+
+    public void cargaAuxiliarObjetos(Model model) {
+    }
+
+    private void carregarAtributosTela(Model model) {
+        model.addAttribute("textoOperacaoAtual", this.getTextoOperacaoAtual());
+        model.addAttribute("somenteLeitura", this.getSomenteLeitura());
+        model.addAttribute("nomeTela", this.getNomeTela());
+        model.addAttribute("viewPath", this.getViewPath());
+    }
+
+    @GetMapping
+    public String index(Model model) {
+        this.operacaoAtual = OperacaoCrud.OPE_PESQUISA;
+        this.carregarAtributosTela(model);
+        return this.getViewPathOperacaoVisualizar();
     }
 
     @GetMapping("/incluir")
@@ -92,6 +142,21 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return this.getRedirectPathOrigem();
     }
 
+    @GetMapping("/consultar/{id}")
+    public String consultar(@PathVariable("id") Long id, Model model) {
+        this.operacaoAtual = OperacaoCrud.OPE_CONSULTA;
+        Optional<T> entity = service.recuperarPorId(id);
+
+        if (entity.isPresent()) {
+            model.addAttribute("objeto", entity.get());
+            this.carregarAtributosTela(model);
+            this.cargaAuxiliarObjetos(model);
+            return this.getViewPathOperacaoInclusao();
+        }
+
+        return this.getRedirectPathOrigem();
+    }
+
     @GetMapping("/alterar/{id}")
     public String alterar(@PathVariable("id") Long id, Model model) {
         this.operacaoAtual = OperacaoCrud.OPE_EDICAO;
@@ -99,6 +164,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
 
         if (entity.isPresent()) {
             model.addAttribute("objeto", entity.get());
+            this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
             return this.getViewPathOperacaoInclusao();
         }
