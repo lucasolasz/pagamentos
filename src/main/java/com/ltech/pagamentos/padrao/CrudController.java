@@ -106,9 +106,9 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return this.getRedirectPathOrigem();
     }
 
-    @GetMapping("/deletar/{id}")
-    public String deletar(@PathVariable("id") Long id, Model model) {
-        service.deletarPorId(id);
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable("id") Long id, Model model) {
+        service.excluirPorId(id);
         return this.getRedirectPathOrigem();
     }
 }

@@ -27,7 +27,7 @@ public abstract class ServiceCrud<T> {
         return getRepository().findById(id);
     }
 
-    public void deletarPorId(Long id) {
+    public void excluirPorId(Long id) {
         getRepository().deleteById(id);
     }
 
