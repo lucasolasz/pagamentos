@@ -1,6 +1,5 @@
 package com.ltech.pagamentos.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.ltech.pagamentos.model.Condomino;
@@ -8,17 +7,14 @@ import com.ltech.pagamentos.padrao.ServiceCrud;
 import com.ltech.pagamentos.repository.CondominoRepository;
 
 @Service
-public class CondominoService extends ServiceCrud<Condomino> {
+public class CondominoService extends ServiceCrud<Condomino, Long, CondominoRepository> {
 
-    private final CondominoRepository condominoRepository;
-
-    public CondominoService(CondominoRepository condominoRepository) {
-        this.condominoRepository = condominoRepository;
+    public CondominoService(CondominoRepository repository) {
+        super(repository);
     }
 
-    @Override
-    protected JpaRepository<Condomino, Long> getRepository() {
-        return condominoRepository;
+    public String meuNome() {
+        return "Lucas";
     }
 
 }

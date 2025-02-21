@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/usuarios")
-public class UsuarioController extends CrudController<Usuario, UsuarioService> {
+public class UsuarioController extends CrudController<Usuario, Long, UsuarioService> {
 
     public UsuarioController(UsuarioService service) {
         super("usuarios", service, "Usuários");

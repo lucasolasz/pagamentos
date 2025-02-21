@@ -2,7 +2,6 @@ package com.ltech.pagamentos.service;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,24 +12,17 @@ import com.ltech.pagamentos.repository.RoleRepository;
 import com.ltech.pagamentos.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService extends ServiceCrud<Usuario> {
-
-    private final UsuarioRepository usuarioRepository;
+public class UsuarioService extends ServiceCrud<Usuario, Long, UsuarioRepository> {
 
     private final RoleRepository roleRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
+    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder,
             RoleRepository roleRepository) {
-        this.usuarioRepository = usuarioRepository;
+        super(repository);
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
-    }
-
-    @Override
-    protected JpaRepository<Usuario, Long> getRepository() {
-        return usuarioRepository;
     }
 
     @Override
@@ -41,19 +33,11 @@ public class UsuarioService extends ServiceCrud<Usuario> {
         super.ajusteAntesGravacao(entity);
     }
 
-    // @Override
-    // public Usuario gravar(Usuario entity) {
-    // entity.setPassword(this.passwordEncoder.encode(entity.getPassword()));
-    // entity.setEnabled(true);
-    // entity.setRoles(this.addRoleToUser("USER"));
-    // return super.gravar(entity);
-    // }
-
     public List<Roles> addRoleToUser(String roleName) {
         return this.roleRepository.findByName(roleName);
     }
 
     public boolean checkIfUserExist(String username) {
-        return this.usuarioRepository.existsByUsername(username);
+        return this.getRepository().existsByUsername(username);
     }
 }

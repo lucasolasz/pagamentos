@@ -12,7 +12,7 @@ import com.ltech.pagamentos.service.SituacaoCondominoService;
 
 @Controller
 @RequestMapping("/condominos")
-public class CondominoController extends CrudController<Condomino, CondominoService> {
+public class CondominoController extends CrudController<Condomino, Long, CondominoService> {
 
     private final BancoService bancoService;
     private final SituacaoCondominoService situacaoCondominoService;

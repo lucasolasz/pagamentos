@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
 
-public abstract class CrudController<T, S extends ServiceCrud<T>> {
+public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
 
     /**
      * Caminho base das views (ex: "students")
@@ -21,7 +21,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     private final String viewPath;
     private final String nomeTela;
     private final Class<T> entityClass;
-    private S service;
+    private final S service;
 
     /**
      * Operação em curso. Valores possíveis na classe OperacaoCrud
@@ -46,7 +46,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     /*
      * Método para acessar o serviço a partir das classes filhas
      */
-    protected S getService() {
+    public S getService() {
         return service;
     }
 
@@ -143,7 +143,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     }
 
     @GetMapping("/consultar/{id}")
-    public String consultar(@PathVariable("id") Long id, Model model) {
+    public String consultar(@PathVariable("id") ID id, Model model) {
         this.operacaoAtual = OperacaoCrud.OPE_CONSULTA;
         Optional<T> entity = service.recuperarPorId(id);
 
@@ -158,7 +158,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     }
 
     @GetMapping("/alterar/{id}")
-    public String alterar(@PathVariable("id") Long id, Model model) {
+    public String alterar(@PathVariable("id") ID id, Model model) {
         this.operacaoAtual = OperacaoCrud.OPE_EDICAO;
         Optional<T> entity = service.recuperarPorId(id);
 
@@ -173,7 +173,7 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable("id") Long id, Model model) {
+    public String excluir(@PathVariable("id") ID id, Model model) {
         service.excluirPorId(id);
         return this.getRedirectPathOrigem();
     }
