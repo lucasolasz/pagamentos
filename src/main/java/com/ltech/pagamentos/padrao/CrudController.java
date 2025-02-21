@@ -18,7 +18,11 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
     private final String viewPath; // Caminho base das views (ex: "students")
     private final Class<T> entityClass;
     private S service;
-    // private final String viewPathOperacao;
+
+    /**
+     * Operação em curso. Valores possíveis na classe OperacaoCrud
+     */
+    private int operacaoAtual;
 
     public CrudController(String viewPath, S service) {
         this.viewPath = viewPath;
@@ -53,10 +57,20 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
 
     @GetMapping
     public String index(Model model) {
+        this.operacaoAtual = OperacaoCrud.OPE_PESQUISA;
         return this.getViewPathOperacaoVisualizar();
     }
 
     public void cargaAuxiliarObjetos(Model model) {
+    }
+
+    /**
+     * Método que retorna a operação em curso na forma textual.
+     * 
+     * @return
+     */
+    public String getTextoOperacaoAtual() {
+        return OperacaoCrud.getTextoOperacao(operacaoAtual);
     }
 
     @GetMapping("/incluir")
@@ -78,12 +92,18 @@ public abstract class CrudController<T, S extends ServiceCrud<T>> {
         return this.getRedirectPathOrigem();
     }
 
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/alterar/{id}")
+    public String alterar(@PathVariable("id") Long id, Model model) {
+        this.operacaoAtual = OperacaoCrud.OPE_EDICAO;
         Optional<T> entity = service.recuperarPorId(id);
-        model.addAttribute("objeto", entity.orElseThrow(() -> new RuntimeException("Entidade não encontrada")));
-        this.cargaAuxiliarObjetos(model);
-        return this.getViewPathOperacaoInclusao();
+
+        if (entity.isPresent()) {
+            model.addAttribute("objeto", entity);
+            this.cargaAuxiliarObjetos(model);
+            return this.getViewPathOperacaoInclusao();
+        }
+
+        return this.getRedirectPathOrigem();
     }
 
     @GetMapping("/deletar/{id}")
