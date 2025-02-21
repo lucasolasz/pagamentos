@@ -7,7 +7,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3">
-            <h5 class="tituloIndex">Condôminos</h5>
+            <h5>Condômninos</h5>
         </div>
 
         <div class="card-body">
@@ -46,7 +46,7 @@
                             "render": function (data, type, row) {
                                 // Retorna o HTML para os botões de ação, com href dinâmico
                                 return `
-                            <a href="/condominos/editar/${row.id}" class="btn btn-warning">
+                            <a href="/condominos/alterar/${row.id}" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i> Editar
                             </a>
                             <a href="/condominos/deletar/${row.id}" class="btn btn-danger">
