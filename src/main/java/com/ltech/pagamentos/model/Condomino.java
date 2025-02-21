@@ -1,6 +1,7 @@
 package com.ltech.pagamentos.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,8 +22,8 @@ import lombok.NoArgsConstructor;
 public class Condomino {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @OneToOne
     @JoinColumn(unique = true)

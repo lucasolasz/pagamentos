@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a th:href="@{${viewPath}}" th:text="${nomeTela}"></a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Novo Condômino</li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="'Novo ' + ${nomeTela}"></li>
         </ol>
     </nav>
 
@@ -17,7 +17,7 @@
         <div class="card-body">
             <h2 th:text="${textoOperacaoAtual} + ' ' + ${nomeTela}"></h2>
 
-            <form th:action="@{/condominos/gravar}" th:object="${objeto}" method="post">
+            <form th:action="@{${viewPath} + '/gravar'}" th:object="${objeto}" method="post">
 
                 <section layout:fragment="camposInputFormulario">
                     <!-- Conteúdo será inserido aqui -->
@@ -26,13 +26,13 @@
                 <div class="row">
                     <div th:if="${!somenteLeitura}" class="col-4 mb-3 form-group">
                         <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Gravar</button>
-                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/condominos}"><i
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{${viewPath}}"><i
                                 class="fas fa-arrow-circle-left"></i> Cancelar</a>
                     </div>
                     <div th:if="${somenteLeitura}" class="col-4 mb-3 form-group">
-                        <a class="btn btn-warning" type="button" th:href="@{'/condominos/alterar/' + ${objeto.id}}"><i
+                        <a class="btn btn-warning" type="button" th:href="@{'${viewPath}/alterar/' + ${objeto.id}}"><i
                                 class="far fa-edit"></i> Alterar</a>
-                        <a class="btn btn-secondary ml-3" type="button" th:href="@{/condominos}"><i
+                        <a class="btn btn-secondary ml-3" type="button" th:href="@{${viewPath}}"><i
                                 class="fas fa-arrow-circle-left"></i> Cancelar</a>
                     </div>
                 </div>

@@ -126,8 +126,10 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
     @GetMapping("/incluir")
     public String incluir(Model model) {
         try {
+            this.operacaoAtual = OperacaoCrud.OPE_INCLUSAO;
             T entity = entityClass.getDeclaredConstructor().newInstance(); // Cria uma nova instância da entidade
             model.addAttribute("objeto", entity);
+            this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
         } catch (Exception e) {
             throw new RuntimeException("Falha ao criar instância da entidade", e);
