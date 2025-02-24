@@ -153,7 +153,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
     @PostMapping("/gravar")
     public String gravar(@Valid @ModelAttribute("objeto") T entity, BindingResult result, Model model) {
         this.carregarAtributosTela(model);
-
+        this.cargaAuxiliarObjetos(model);
         if (!validarAntesDeGravar(entity, result, model)) {
             return this.getViewPathOperacaoInclusao();
         }
