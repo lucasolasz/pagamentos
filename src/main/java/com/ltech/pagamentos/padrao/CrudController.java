@@ -106,6 +106,19 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         return OperacaoCrud.getTextoOperacao(operacaoAtual);
     }
 
+    /**
+     * Retorna o codigo int da operação atual
+     * 
+     * @return
+     */
+    public int getOperacaoAtual() {
+        return this.operacaoAtual;
+    }
+
+    protected boolean validarAntesDeGravar(T entity, BindingResult result, Model model) {
+        return !result.hasErrors(); // Por padrão, apenas verifica os erros do Bean Validation
+    }
+
     public void cargaAuxiliarObjetos(Model model) {
     }
 
@@ -139,6 +152,12 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
 
     @PostMapping("/gravar")
     public String gravar(@Valid @ModelAttribute("objeto") T entity, BindingResult result, Model model) {
+        this.carregarAtributosTela(model);
+
+        if (!validarAntesDeGravar(entity, result, model)) {
+            return this.getViewPathOperacaoInclusao();
+        }
+
         service.ajusteAntesGravacao(entity);
         service.gravar(entity);
         return this.getRedirectPathOrigem();

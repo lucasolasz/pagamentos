@@ -10,8 +10,6 @@ import com.ltech.pagamentos.padrao.CrudController;
 import com.ltech.pagamentos.service.StudentService;
 import com.ltech.pagamentos.util.MensagemUtil;
 
-import jakarta.validation.Valid;
-
 @Controller
 @RequestMapping("/students")
 public class StudentController extends CrudController<Student, Long, StudentService> {
@@ -21,14 +19,17 @@ public class StudentController extends CrudController<Student, Long, StudentServ
     }
 
     @Override
-    public String gravar(@Valid Student entity, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return this.getViewPathOperacaoInclusao();
-        } else if (this.getService().jaExisteEmailCadastrado(entity.getEmail())) {
-            MensagemUtil.adicionarMensagem(model, "Já existe cadastro para este email", MensagemUtil.COR_ALERTA);
-            return this.getViewPathOperacaoInclusao();
+    protected boolean validarAntesDeGravar(Student entity, BindingResult result, Model model) {
+        if (!super.validarAntesDeGravar(entity, result, model)) {
+            return false;
         }
-        return super.gravar(entity, result, model);
+
+        if (this.getService().jaExisteEmailCadastrado(entity.getEmail())) {
+            MensagemUtil.adicionarMensagem(model, "Já existe cadastro para este email", MensagemUtil.COR_ALERTA);
+            return false;
+        }
+
+        return true;
     }
 
 }
