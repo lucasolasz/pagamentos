@@ -43,22 +43,23 @@
             <input type="text" th:field="*{cpf}" class="form-control"
                 th:classappend="${#fields.hasErrors('cpf')} ? 'is-invalid' : ''" id="cpf"
                 placeholder="Digite o número do cpf" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">
-            </div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
             <input type="text" th:field="*{cpf}" class="form-control" id="cpf" th:if="${somenteLeitura}" disabled />
         </div>
 
         <div class="mb-3 col-4 form-group">
             <label for="dataNascimento">Data de Nascimento: *</label>
             <input type="text" th:field="*{dataNascimento}" id="dataNascimento" class="form-control datePicker"
-                placeholder="Escolha ou digite a data de nascimento" data-mask="00/00/0000"
-                th:if="${!somenteLeitura}" />
+                placeholder="Escolha ou digite a data de nascimento" data-mask="00/00/0000" th:if="${!somenteLeitura}"
+                th:classappend="${#fields.hasErrors('dataNascimento')} ? 'is-invalid' : ''" />
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}">
+            </div>
             <input type="text" th:field="*{dataNascimento}" class="form-control" id="dataNascimento"
                 th:if="${somenteLeitura}" data-mask="00/00/0000" disabled />
         </div>
 
         <div class="mb-3 col-4 form-group">
-            <label for="telefone">Telefone: *</label>
+            <label for="telefone">Telefone:</label>
             <input type="text" th:field="*{telefone}" class="form-control"
                 th:classappend="${#fields.hasErrors('telefone')} ? 'is-invalid' : ''" id="telefone"
                 placeholder="Digite o número do telefone" th:if="${!somenteLeitura}" />
@@ -69,7 +70,7 @@
         </div>
 
         <div class="mb-3 col-4 form-group">
-            <label for="celular">Celular: *</label>
+            <label for="celular">Celular:</label>
             <input type="text" th:field="*{celular}" class="form-control"
                 th:classappend="${#fields.hasErrors('celular')} ? 'is-invalid' : ''" id="celular"
                 placeholder="Digite o número do celular" th:if="${!somenteLeitura}" />
@@ -96,25 +97,29 @@
         </div>
 
         <div class="col-4 form-group">
-            <label for="banco">Banco:</label>
-            <select class="form-control" id="banco" th:field="*{banco}" th:if="${!somenteLeitura}">
+            <label for="banco">Banco: *</label>
+            <select class="form-control" id="banco" th:field="*{banco}" th:if="${!somenteLeitura}"
+                th:classappend="${#fields.hasErrors('banco')} ? 'is-invalid' : ''">
                 <option value="">Selecione um banco</option>
                 <option th:each="banco : ${listaBancos}" th:value="${banco.id}" th:text="${banco.nomeBanco}">
                 </option>
             </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('banco')}" th:errors="*{banco}"></div>
             <input type="text" th:field="*{banco.nomeBanco}" class="form-control" id="banco" th:if="${somenteLeitura}"
                 disabled />
         </div>
 
         <div class="col-4 form-group">
-            <label for="situacaoCondomino">Situação Condômino:</label>
+            <label for="situacaoCondomino">Situação Condômino: *</label>
             <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}"
-                th:if="${!somenteLeitura}">
+                th:if="${!somenteLeitura}" th:classappend="${#fields.hasErrors('banco')} ? 'is-invalid' : ''">
                 <option value="">Selecione uma situação</option>
                 <option th:each="situacao : ${listaSituacaoCondomino}" th:value="${situacao.id}"
                     th:text="${situacao.descricao}">
                 </option>
             </select>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('situacaoCondomino')}"
+                th:errors="*{situacaoCondomino}"></div>
             <input type="text" th:field="*{situacaoCondomino.descricao}" class="form-control" id="banco"
                 th:if="${somenteLeitura}" disabled />
         </div>
