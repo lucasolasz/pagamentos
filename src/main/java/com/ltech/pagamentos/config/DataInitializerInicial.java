@@ -1,89 +1,134 @@
 package com.ltech.pagamentos.config;
 
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import com.ltech.pagamentos.model.Roles;
-import com.ltech.pagamentos.model.Usuario;
-import com.ltech.pagamentos.repository.RoleRepository;
-import com.ltech.pagamentos.repository.UsuarioRepository;
 
 @Component
 @Profile("dev")
 public class DataInitializerInicial implements CommandLineRunner {
 
-    private final UsuarioRepository usuarioRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JdbcTemplate jdbcTemplate;
 
-    public DataInitializerInicial(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
-            RoleRepository roleRepository, JdbcTemplate jdbcTemplate) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-        this.roleRepository = roleRepository;
+    public DataInitializerInicial(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void run(String... args) {
-        if (this.roleRepository.count() == 0) {
 
-            Roles roles1 = new Roles();
-            roles1.setName("ROLE_ADMIN");
-            Roles roles2 = new Roles();
-            roles2.setName("ROLE_USER");
+        jdbcTemplate.execute(carregarBancos());
+        jdbcTemplate.execute(carregarSituacaoCondomino());
+        jdbcTemplate.execute(carregarStudents());
+        jdbcTemplate.execute(carregarUnidade());
+        jdbcTemplate.execute(carregarCondominos());
+        jdbcTemplate.execute(carregarRoles());
+        jdbcTemplate.execute(carregarUsuarios());
+        jdbcTemplate.execute(carregarRolesUsuario());
 
-            this.roleRepository.save(roles1);
-            this.roleRepository.save(roles2);
+        System.out.println("Scripts executados");
 
-            System.out.println("Roles criadas!");
+    }
+
+    public String carregarBancos() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/bancos.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
 
-        if (this.usuarioRepository.count() == 0) {
-            List<Roles> roleAdm = this.roleRepository.findAll();
-            Usuario admin = new Usuario();
+    }
 
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("123"));
-            admin.setFirstName("Administrador");
-            admin.setLastName("adm");
-            admin.setEnabled(true);
-            admin.setRoles(roleAdm);
+    public String carregarRoles() {
 
-            List<Roles> roleUser = this.roleRepository.findByName("ROLE_USER");
-            Usuario user = new Usuario();
-
-            user.setUsername("user");
-            user.setPassword(passwordEncoder.encode("123"));
-            user.setFirstName("Usuario");
-            user.setLastName("comum");
-            user.setEnabled(true);
-            user.setRoles(roleUser);
-
-            this.usuarioRepository.save(admin);
-            this.usuarioRepository.save(user);
-
-            System.out.println("Usuários criados!");
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/roles.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
 
-        jdbcTemplate.update("INSERT INTO `student` (`address`, `email`, `name`)\r\n" + //
-                "SELECT \r\n" + //
-                "    CONCAT(FLOOR(1 + (RAND() * 999)), ' Main St, City ', FLOOR(1 + (RAND() * 100))) AS address,\r\n" + //
-                "    CONCAT('student', FLOOR(1 + (RAND() * 9999)), '@example.com') AS email,\r\n" + //
-                "    CONCAT('Student ', FLOOR(1 + (RAND() * 50))) AS name\r\n" + //
-                "FROM (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION \r\n" + //
-                "      SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10) AS tmp1,\r\n" + //
-                "     (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) AS tmp2\r\n" + //
-                "LIMIT 50;");
+    }
 
-        System.out.println("50 Estudantes inseridos");
+    public String carregarSituacaoCondomino() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/situacao_condomino.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarUnidade() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/unidade.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarStudents() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/students.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarUsuarios() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/usuario.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarRolesUsuario() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/usuario_roles.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarCondominos() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/condominos.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
     }
 
