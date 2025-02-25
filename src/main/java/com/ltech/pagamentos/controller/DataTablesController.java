@@ -63,7 +63,7 @@ public class DataTablesController {
         if (searchValue != null && !searchValue.isEmpty()) {
             objPage = condominoRepository.findByUnidadeCodUnidadeContainingIgnoreCase(searchValue, pageable);
         } else {
-            objPage = condominoRepository.findAll(pageable);
+            objPage = condominoRepository.findAllOrderByUnidadeCodUnidade(pageable);
         }
 
         Map<String, Object> response = new HashMap<>();
