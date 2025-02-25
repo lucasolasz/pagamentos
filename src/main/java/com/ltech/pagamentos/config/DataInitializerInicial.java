@@ -12,16 +12,21 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.ltech.pagamentos.model.Banco;
 import com.ltech.pagamentos.model.Condomino;
+import com.ltech.pagamentos.model.Roles;
 import com.ltech.pagamentos.model.SituacaoCondomino;
 import com.ltech.pagamentos.model.Unidade;
+import com.ltech.pagamentos.model.Usuario;
 import com.ltech.pagamentos.repository.BancoRepository;
 import com.ltech.pagamentos.repository.CondominoRepository;
+import com.ltech.pagamentos.repository.RoleRepository;
 import com.ltech.pagamentos.repository.SituacaoCondominoRepository;
 import com.ltech.pagamentos.repository.UnidadeRepository;
+import com.ltech.pagamentos.repository.UsuarioRepository;
 import com.ltech.pagamentos.util.TextoUtil;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
@@ -37,14 +42,22 @@ public class DataInitializerInicial implements CommandLineRunner {
     private final BancoRepository bancoRepository;
     private final SituacaoCondominoRepository situacaoCondominoRepository;
 
+    private final UsuarioRepository usuarioRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
     public DataInitializerInicial(JdbcTemplate jdbcTemplate, UnidadeRepository unidadeRepository,
             CondominoRepository condominoRepository, BancoRepository bancoRepository,
-            SituacaoCondominoRepository situacaoCondominoRepository) {
+            SituacaoCondominoRepository situacaoCondominoRepository, UsuarioRepository usuarioRepository,
+            RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.jdbcTemplate = jdbcTemplate;
         this.unidadeRepository = unidadeRepository;
         this.condominoRepository = condominoRepository;
         this.bancoRepository = bancoRepository;
         this.situacaoCondominoRepository = situacaoCondominoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -56,12 +69,39 @@ public class DataInitializerInicial implements CommandLineRunner {
         jdbcTemplate.execute(carregarUnidade());
         jdbcTemplate.execute(carregarCondominos());
         jdbcTemplate.execute(carregarRoles());
+        jdbcTemplate.execute(carregarTipoUsuario());
+        jdbcTemplate.execute(carregarFormaPagamento());
+
         jdbcTemplate.execute(carregarUsuarios());
         jdbcTemplate.execute(carregarRolesUsuario());
 
         // processarArquivo();
 
         System.out.println("Scripts executados");
+
+    }
+
+    public String carregarFormaPagamento() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/formaPagamento.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
+    public String carregarTipoUsuario() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/tipoUsuario.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
     }
 
@@ -214,6 +254,35 @@ public class DataInitializerInicial implements CommandLineRunner {
 
     public SituacaoCondomino recuperarSituacaoPorId(Long id) {
         return this.situacaoCondominoRepository.findById(id).orElse(null);
+    }
+
+    public void criarUsuarios() {
+        if (this.usuarioRepository.count() == 0) {
+            List<Roles> roleAdm = this.roleRepository.findAll();
+            Usuario admin = new Usuario();
+
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("123"));
+            admin.setFirstName("Administrador");
+            admin.setLastName("Sistema");
+            admin.setEnabled(true);
+            admin.setRoles(roleAdm);
+
+            List<Roles> roleUser = this.roleRepository.findByName("ROLE_USER");
+            Usuario user = new Usuario();
+
+            user.setUsername("user");
+            user.setPassword(passwordEncoder.encode("123"));
+            user.setFirstName("Usuario");
+            user.setLastName("comum");
+            user.setEnabled(true);
+            user.setRoles(roleUser);
+
+            this.usuarioRepository.save(admin);
+            this.usuarioRepository.save(user);
+
+            System.out.println("Usuários criados!");
+        }
     }
 
 }
