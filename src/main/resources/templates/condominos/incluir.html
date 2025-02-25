@@ -8,7 +8,7 @@
     <input type="hidden" th:field="*{unidade}" class="form-control" id="unidade" />
 
     <div class="row">
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <label for="unidade">Unidade:</label>
             <input type="text" th:value="${objeto.unidade?.codUnidade}" class="form-control" id="unidade" disabled />
         </div>
@@ -16,71 +16,55 @@
 
     <div class="row">
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="nomeCondomino">Nome Condômino *</label>
-            <input type="text" th:field="*{nomeCondomino}" class="form-control"
-                th:classappend="${#fields.hasErrors('nomeCondomino')}? 'is-invalid' : ''" id="nomeCondomino"
+            <input type="text" th:field="*{nomeCondomino}" class="form-control" id="nomeCondomino"
                 placeholder="Digite o nome do condômino" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeCondomino')}" th:errors="*{nomeCondomino}">
-            </div>
             <input type="text" th:field="*{nomeCondomino}" class="form-control" id="nomeCondomino"
                 th:if="${somenteLeitura}" disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="numIdentidade">Identidade *</label>
-            <input type="text" th:field="*{numIdentidade}" class="form-control"
-                th:classappend="${#fields.hasErrors('numIdentidade')} ? 'is-invalid' : ''" id="numIdentidade"
+            <input type="text" th:field="*{numIdentidade}" class="form-control" id="numIdentidade"
                 placeholder="Digite o número da identidade" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('numIdentidade')}" th:errors="*{numIdentidade}">
-            </div>
             <input type="text" th:field="*{numIdentidade}" class="form-control" id="numIdentidade"
                 th:if="${somenteLeitura}" disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="cpf">CPF: *</label>
-            <input type="text" th:field="*{cpf}" class="form-control"
-                th:classappend="${#fields.hasErrors('cpf')} ? 'is-invalid' : ''" id="cpf"
-                placeholder="Digite o número do cpf" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
+            <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="Digite o número do cpf"
+                th:if="${!somenteLeitura}" />
             <input type="text" th:field="*{cpf}" class="form-control" id="cpf" th:if="${somenteLeitura}" disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="dataNascimento">Data de Nascimento: *</label>
             <input type="text" th:field="*{dataNascimento}" id="dataNascimento" class="form-control datePicker"
-                placeholder="Escolha ou digite a data de nascimento" data-mask="00/00/0000" th:if="${!somenteLeitura}"
-                th:classappend="${#fields.hasErrors('dataNascimento')} ? 'is-invalid' : ''" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}">
-            </div>
+                placeholder="Escolha ou digite a data de nascimento" data-mask="00/00/0000"
+                th:if="${!somenteLeitura}" />
             <input type="text" th:field="*{dataNascimento}" class="form-control" id="dataNascimento"
                 th:if="${somenteLeitura}" data-mask="00/00/0000" disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="telefone">Telefone:</label>
-            <input type="text" th:field="*{telefone}" class="form-control"
-                th:classappend="${#fields.hasErrors('telefone')} ? 'is-invalid' : ''" id="telefone"
+            <input type="text" th:field="*{telefone}" class="form-control" id="telefone"
                 placeholder="Digite o número do telefone" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}">
-            </div>
             <input type="text" th:field="*{telefone}" class="form-control" id="telefone" th:if="${somenteLeitura}"
                 disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="celular">Celular:</label>
-            <input type="text" th:field="*{celular}" class="form-control"
-                th:classappend="${#fields.hasErrors('celular')} ? 'is-invalid' : ''" id="celular"
+            <input type="text" th:field="*{celular}" class="form-control" id="celular"
                 placeholder="Digite o número do celular" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('celular')}" th:errors="*{celular}">
-            </div>
             <input type="text" th:field="*{celular}" class="form-control" id="celular" th:if="${somenteLeitura}"
                 disabled />
         </div>
 
-        <div class="mb-3 col-4 form-group">
+        <div class="mb-3 col-md-4 form-group">
             <label for="profissao">Profissão:</label>
             <input type="text" th:field="*{profissao}" class="form-control" id="profissao"
                 placeholder="Digite a sua profissão" th:if="${!somenteLeitura}" />
@@ -96,35 +80,30 @@
                 th:if="${somenteLeitura}" disabled />
         </div>
 
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <label for="banco">Banco: *</label>
-            <select class="form-control" id="banco" th:field="*{banco}" th:if="${!somenteLeitura}"
-                th:classappend="${#fields.hasErrors('banco')} ? 'is-invalid' : ''">
+            <select class="form-control" id="banco" th:field="*{banco}" th:if="${!somenteLeitura}">
                 <option value="">Selecione um banco</option>
                 <option th:each="banco : ${listaBancos}" th:value="${banco.id}" th:text="${banco.nomeBanco}">
                 </option>
             </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('banco')}" th:errors="*{banco}"></div>
             <input type="text" th:field="*{banco.nomeBanco}" class="form-control" id="banco" th:if="${somenteLeitura}"
                 disabled />
         </div>
 
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <label for="situacaoCondomino">Situação Condômino: *</label>
-            <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}"
-                th:if="${!somenteLeitura}" th:classappend="${#fields.hasErrors('banco')} ? 'is-invalid' : ''">
+            <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}">
                 <option value="">Selecione uma situação</option>
                 <option th:each="situacao : ${listaSituacaoCondomino}" th:value="${situacao.id}"
                     th:text="${situacao.descricao}">
                 </option>
             </select>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('situacaoCondomino')}"
-                th:errors="*{situacaoCondomino}"></div>
             <input type="text" th:field="*{situacaoCondomino.descricao}" class="form-control" id="banco"
                 th:if="${somenteLeitura}" disabled />
         </div>
 
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <label for="numContrato">Número do Contrato: </label>
             <input type="text" th:field="*{numContrato}" class="form-control" id="numContrato"
                 placeholder="Digite o número do contrato" th:if="${!somenteLeitura}" />
@@ -132,7 +111,7 @@
                 disabled />
         </div>
 
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="contratoDeGaveta" th:field="*{contratoDeGaveta}"
                     th:if="${!somenteLeitura}">
@@ -150,14 +129,10 @@
 
     <div class="row">
 
-        <div class="col-4 form-group">
+        <div class="col-md-4 form-group">
             <label for="nomeProprietario">Nome Proprietário: *</label>
-            <input type="text" th:field="*{nomeProprietario}" class="form-control"
-                th:classappend="${#fields.hasErrors('nomeProprietario')}? 'is-invalid' : ''" id="nomeProprietario"
+            <input type="text" th:field="*{nomeProprietario}" class="form-control" id="nomeProprietario"
                 placeholder="Digite o nome do proprietário" th:if="${!somenteLeitura}" />
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeProprietario')}"
-                th:errors="*{nomeProprietario}">
-            </div>
             <input type="text" th:field="*{nomeProprietario}" class="form-control" id="nomeProprietario"
                 th:if="${somenteLeitura}" disabled />
         </div>
@@ -175,8 +150,8 @@
             <label for="outrosResidentes">Outros Residentes:</label>
             <textarea type="text" th:field="*{outrosResidentes}" class="form-control" id="outrosResidentes"
                 placeholder="Digite o nome do condômino" rows="10" th:if="${!somenteLeitura}"></textarea>
-            <textarea type="text" th:field="*{outrosResidentes}" class="form-control" id="outrosResidentes"
-                placeholder="Digite o nome do condômino" rows="10" th:if="${somenteLeitura}" disabled></textarea>
+            <textarea type="text" th:field="*{outrosResidentes}" class="form-control" id="outrosResidentes" rows="10"
+                th:if="${somenteLeitura}" disabled></textarea>
         </div>
     </div>
 

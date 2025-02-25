@@ -20,7 +20,7 @@
             <form action="#" th:action="@{/usuarios/gravar}" th:object="${objeto}" method="post">
 
                 <div class="row">
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="firstName">Nome: *</label>
                         <input type="text" th:field="*{firstName}" class="form-control"
                             th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid' : ''" id="firstName"
@@ -29,7 +29,7 @@
                             th:errors="*{firstName}"></div>
                     </div>
 
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="lastName">Sobrenome: *</label>
                         <input type="text" th:field="*{lastName}" class="form-control"
                             th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''" id="lastName"
@@ -38,7 +38,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="username">Usuário: *</label>
                         <input type="text" th:field="*{username}" class="form-control"
                             th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''" id="username"
@@ -46,7 +46,7 @@
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
                         </div>
                     </div>
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="password">Senha: *</label>
                         <input type="password" th:field="*{password}" class="form-control"
                             th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" id="password"
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Cadastrar</button>
                     </div>
                 </div>

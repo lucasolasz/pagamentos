@@ -24,7 +24,7 @@
                         <input type="hidden" th:field="*{id}" class="form-control" id="id" />
                     </div>
 
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="name" class="form-label">Nome *</label>
                         <input type="text" th:field="*{name}" class="form-control"
                             th:classappend="${#fields.hasErrors('name')}? 'is-invalid' : ''" id="name"
@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="email" class="form-label">Email *</label>
                         <input type="text" th:field="*{email}" class="form-control"
                             th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" id="email"
@@ -41,7 +41,7 @@
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
                         </div>
                     </div>
-                    <div class="mb-3 col-4">
+                    <div class="mb-3 col-md-4">
                         <label for="address" class="form-label">Address</label>
                         <input type="text" th:field="*{address}" class="form-control" id="address"
                             placeholder="Enter address" />
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Gravar</button>
                         <a class="btn btn-secondary ml-3" type="button" th:href="@{/students}">Cancelar</a>
                     </div>
