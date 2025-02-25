@@ -30,8 +30,9 @@
                                 class="fas fa-arrow-circle-left"></i> Cancelar</a>
                     </div>
                     <div th:if="${somenteLeitura}" class="col-4 mb-3 form-group">
-                        <a class="btn btn-warning" type="button" th:href="@{'${viewPath}/alterar/' + ${objeto.id}}"><i
-                                class="far fa-edit"></i> Alterar</a>
+                        <a class="btn btn-warning" type="button"
+                            th:href="@{${viewPath} + '/alterar/' + ${objeto.id}}"><i class="far fa-edit"></i>
+                            Alterar</a>
                         <a class="btn btn-secondary ml-3" type="button" th:href="@{${viewPath}}"><i
                                 class="fas fa-arrow-circle-left"></i> Cancelar</a>
                     </div>
