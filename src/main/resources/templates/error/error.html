@@ -9,13 +9,20 @@
     </div>
 
     <div th:if="${errorMessage}">
+        <h4>Detalhe do erro:</h4>
+        <div th:if="${errorMessage}" class="mb-3">
+            <small th:text="${exceptionName} + ' : ' + ${errorMessage}" class="font-weight-bold text-dark"></small>
+        </div>
+    </div>
+
+    <div th:if="${cause}">
         <h4>Causa:</h4>
         <div th:if="${cause}" class="mb-3">
             <small th:text="${cause}" class="font-weight-bold text-dark"></small>
         </div>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 pl-0">
         <p>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
                 aria-expanded="false" aria-controls="collapseExample">

@@ -11,7 +11,8 @@ public class ErrorController {
     public String handleError(Exception ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
         model.addAttribute("stackTrace", getStackTrace(ex));
-        model.addAttribute("cause", getCause(ex));
+        model.addAttribute("cause", ex.getCause());
+        model.addAttribute("exceptionName", ex.getClass().getSimpleName());
         return "error/error"; // redireciona para a página error.html
     }
 
@@ -22,13 +23,5 @@ public class ErrorController {
             stackTrace.append(element.toString()).append("\n");
         }
         return stackTrace.toString();
-    }
-
-    private String getCause(Exception ex) {
-        Throwable cause = ex.getCause();
-        if (cause != null) {
-            return cause.toString(); // Exibe a causa da exceção
-        }
-        return "Nenhuma causa encontrada";
     }
 }
