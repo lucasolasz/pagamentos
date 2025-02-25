@@ -1,7 +1,5 @@
 package com.ltech.pagamentos.controller;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +12,7 @@ import com.ltech.pagamentos.service.SituacaoCondominoService;
 
 @Controller
 @RequestMapping("/condominos")
-public class CondominoController extends CrudController<Condomino, UUID, CondominoService> {
+public class CondominoController extends CrudController<Condomino, Long, CondominoService> {
 
     private final BancoService bancoService;
     private final SituacaoCondominoService situacaoCondominoService;

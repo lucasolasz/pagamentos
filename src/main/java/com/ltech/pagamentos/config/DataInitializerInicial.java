@@ -54,12 +54,12 @@ public class DataInitializerInicial implements CommandLineRunner {
         jdbcTemplate.execute(carregarSituacaoCondomino());
         jdbcTemplate.execute(carregarStudents());
         jdbcTemplate.execute(carregarUnidade());
-        // jdbcTemplate.execute(carregarCondominos());
+        jdbcTemplate.execute(carregarCondominos());
         jdbcTemplate.execute(carregarRoles());
         jdbcTemplate.execute(carregarUsuarios());
         jdbcTemplate.execute(carregarRolesUsuario());
 
-        processarArquivo();
+        // processarArquivo();
 
         System.out.println("Scripts executados");
 
