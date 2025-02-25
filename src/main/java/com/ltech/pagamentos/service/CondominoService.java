@@ -15,8 +15,4 @@ public class CondominoService extends ServiceCrud<Condomino, UUID, CondominoRepo
         super(repository);
     }
 
-    public String meuNome() {
-        return "Lucas";
-    }
-
 }
