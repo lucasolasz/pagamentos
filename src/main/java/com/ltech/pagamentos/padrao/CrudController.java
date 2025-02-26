@@ -122,6 +122,9 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
     public void cargaAuxiliarObjetos(Model model) {
     }
 
+    public void preCarregarAtributosObjeto(T entity) {
+    }
+
     private void carregarAtributosTela(Model model) {
         model.addAttribute("textoOperacaoAtual", this.getTextoOperacaoAtual());
         model.addAttribute("somenteLeitura", this.getSomenteLeitura());
@@ -141,6 +144,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         try {
             this.operacaoAtual = OperacaoCrud.OPE_INCLUSAO;
             T entity = entityClass.getDeclaredConstructor().newInstance(); // Cria uma nova instância da entidade
+            this.preCarregarAtributosObjeto(entity);
             model.addAttribute("objeto", entity);
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
@@ -169,6 +173,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         Optional<T> entity = service.recuperarPorId(id);
 
         if (entity.isPresent()) {
+            this.preCarregarAtributosObjeto(entity.get());
             model.addAttribute("objeto", entity.get());
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
@@ -184,6 +189,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         Optional<T> entity = service.recuperarPorId(id);
 
         if (entity.isPresent()) {
+            this.preCarregarAtributosObjeto(entity.get());
             model.addAttribute("objeto", entity.get());
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
