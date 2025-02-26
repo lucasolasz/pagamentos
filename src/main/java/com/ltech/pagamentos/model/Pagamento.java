@@ -30,7 +30,8 @@ public class Pagamento {
 
     private LocalDate dataPagamento;
 
-    private String mesReferencia;
+    @ManyToOne
+    private Mes mesReferencia;
 
     private String anoReferencia;
 
