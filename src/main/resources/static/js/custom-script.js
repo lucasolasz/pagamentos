@@ -8,6 +8,16 @@ $(document).ready(function () {
         $(this).mask($(this).attr('data-mask'));
     });
 
+    $('[data-readonly]').each(function () {
+        $(this).css({
+            'background-color': '#e9ecef', /* Cor padrão do disabled */
+            'cursor': 'default', /* Mantém o cursor padrão */
+            'color': '#6c757d', /* Cor do texto similar ao disabled */
+            'border': '1px solid #ced4da', /* Borda padrão */
+            'pointer-events': 'none' /* Impede interação, mas mantém a aparência */
+        });
+    });
+
     // Aplicar máscara e Datepicker a todos os campos com a classe .data-picker
     $(".datePicker").each(function () {
         $(this).datepicker({
