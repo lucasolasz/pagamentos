@@ -71,6 +71,7 @@ public class DataInitializerInicial implements CommandLineRunner {
         jdbcTemplate.execute(carregarRoles());
         jdbcTemplate.execute(carregarTipoUsuario());
         jdbcTemplate.execute(carregarFormaPagamento());
+        jdbcTemplate.execute(carregarMes());
 
         jdbcTemplate.execute(carregarUsuarios());
         jdbcTemplate.execute(carregarRolesUsuario());
@@ -78,6 +79,18 @@ public class DataInitializerInicial implements CommandLineRunner {
         // processarArquivo();
 
         System.out.println("Scripts executados");
+
+    }
+
+    public String carregarMes() {
+
+        try {
+            Path path = Paths.get(new ClassPathResource("scripts/mes.sql").getURI());
+            String sql = Files.readString(path);
+            return sql;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
     }
 
