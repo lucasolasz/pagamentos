@@ -4,8 +4,51 @@
 
 <section layout:fragment="camposInputFormulario">
 
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label for="unidade">Unidade: *</label>
+            <select class="form-control select2" id="unidade" th:field="*{unidade}" th:if="${!somenteLeitura}">
+                <option value=""></option>
+                <option th:each="unidade : ${listaUnidades}" th:value="${unidade.id}" th:text="${unidade.codUnidade}">
+                </option>
+            </select>
+        </div>
 
+        <div class="mb-3 col-md-4 form-group">
+            <label for="dataPagamento">Data do Pagamento: </label>
+            <input type="text" th:field="*{dataPagamento}" id="dataPagamento" class="form-control"
+                data-mask="00/00/0000" data-readonly />
+        </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <label for="mesReferencia">Pagamento do Mês:</label>
+            <select class="form-control select2" id="mesReferencia" th:field="*{mesReferencia}"
+                th:if="${!somenteLeitura}">
+                <option value=""></option>
+                <option th:each="mes : ${listaMeses}" th:value="${mes.id}" th:text="${mes.descricaoMes}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="anoReferencia">Ano:</label>
+            <input type="text" th:field="*{anoReferencia}" class="form-control" id="anoReferencia"
+                placeholder="Digite o ano" />
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label for="funcionarioRecebedor">Funcionário Recebedor:</label>
+            <select class="form-control select2" id="funcionarioRecebedor" th:field="*{funcionarioRecebedor}"
+                th:if="${!somenteLeitura}">
+                <option value=""></option>
+                <option th:each="usuario : ${listaUsuarios}" th:value="${usuario.id}" th:text="${usuario.fullname}">
+                </option>
+            </select>
+        </div>
+    </div>
 
 </section>
 
