@@ -122,7 +122,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
     public void cargaAuxiliarObjetos(Model model) {
     }
 
-    public void preCarregarAtributosObjeto(T entity) {
+    public void preCarregarAtributosObjeto(T entity, Model model) {
     }
 
     private void carregarAtributosTela(Model model) {
@@ -136,6 +136,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
     public String index(Model model) {
         this.operacaoAtual = OperacaoCrud.OPE_PESQUISA;
         this.carregarAtributosTela(model);
+        this.cargaAuxiliarObjetos(model);
         return this.getViewPathOperacaoVisualizar();
     }
 
@@ -144,7 +145,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         try {
             this.operacaoAtual = OperacaoCrud.OPE_INCLUSAO;
             T entity = entityClass.getDeclaredConstructor().newInstance(); // Cria uma nova instância da entidade
-            this.preCarregarAtributosObjeto(entity);
+            this.preCarregarAtributosObjeto(entity, model);
             model.addAttribute("objeto", entity);
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
@@ -173,7 +174,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         Optional<T> entity = service.recuperarPorId(id);
 
         if (entity.isPresent()) {
-            this.preCarregarAtributosObjeto(entity.get());
+            this.preCarregarAtributosObjeto(entity.get(), model);
             model.addAttribute("objeto", entity.get());
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
@@ -189,7 +190,7 @@ public abstract class CrudController<T, ID, S extends ServiceCrud<T, ID, ?>> {
         Optional<T> entity = service.recuperarPorId(id);
 
         if (entity.isPresent()) {
-            this.preCarregarAtributosObjeto(entity.get());
+            this.preCarregarAtributosObjeto(entity.get(), model);
             model.addAttribute("objeto", entity.get());
             this.carregarAtributosTela(model);
             this.cargaAuxiliarObjetos(model);
