@@ -9,6 +9,46 @@
         <div class="card-header py-3">
             <h5 th:text="${nomeTela}"></h5>
         </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="unidade">Unidade: *</label>
+                    <select class="form-control select2" id="unidade">
+                        <option value=""></option>
+                        <option th:each="unidade : ${listaUnidades}" th:value="${unidade.id}"
+                            th:text="${unidade.codUnidade}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <form id="unidadeForm" th:action="@{${viewPath} + '/incluir'}" method="post"
+                    class="d-flex align-items-center mt-3">
+                    <input type="hidden" name="unidadeId" id="unidadeId">
+                    <button type="submit" id="incluirPagamentoBtn" disabled class="btn btn-primary">Incluir
+                        Pagamento</button>
+                </form>
+
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $("#unidade").change(function () {
+                    let unidadeId = $(this).val();
+                    $("#unidadeId").val(unidadeId);
+
+                    if (unidadeId) {
+                        $("#incluirPagamentoBtn").prop("disabled", false);
+                    } else {
+                        $("#incluirPagamentoBtn").prop("disabled", true);
+                    }
+                });
+            });
+        </script>
+
+    </div>
 </main>
 
 </html>

@@ -9,8 +9,17 @@ import com.ltech.pagamentos.repository.PagamentoRepository;
 @Service
 public class PagamentoService extends ServiceCrud<Pagamento, Long, PagamentoRepository> {
 
-    public PagamentoService(PagamentoRepository repository) {
+    private final DebitoService debitoService;
+
+    public PagamentoService(PagamentoRepository repository, DebitoService debitoService) {
         super(repository);
+        this.debitoService = debitoService;
+    }
+
+    @Override
+    public void ajusteAntesGravacao(Pagamento entity) {
+        debitoService.gravar(entity.getUnidade().getDebito());
+        super.ajusteAntesGravacao(entity);
     }
 
 }

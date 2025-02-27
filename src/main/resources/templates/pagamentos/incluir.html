@@ -50,6 +50,91 @@
         </div>
     </div>
 
+    <hr class="mb-4">
+
+    <div class="row">
+        <h4 class="col-md-4 mb-3">Forma de Pagamento</h4>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 form-group">
+            <label for="formaPagamento">Forma Pagamento: </label>
+            <select class="form-control select2" id="formaPagamento" th:field="*{formaPagamento}"
+                th:if="${!somenteLeitura}">
+                <option value=""></option>
+                <option th:each="forma : ${listaFormaPagamentos}" th:value="${forma.id}" th:text="${forma.descricao}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="numCheque">Número do Cheque:</label>
+            <input type="text" th:field="*{numCheque}" class="form-control" id="numCheque"
+                placeholder="Digite o número do cheque" />
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label for="banco">Banco: </label>
+            <select class="form-control select2" id="banco" th:field="*{banco}" th:if="${!somenteLeitura}">
+                <option value=""></option>
+                <option th:each="banco : ${listaBancos}" th:value="${banco.id}" th:text="${banco.nomeBanco}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="dataDepositoChequePreDatado">Data para Depósito do Pré-Datado: *</label>
+            <input type="text" th:field="*{dataDepositoChequePreDatado}" id="dataDepositoChequePreDatado"
+                class="form-control datePicker" placeholder="Escolha ou digite a data de depósito do cheque pré-datado"
+                data-mask="00/00/0000" th:if="${!somenteLeitura}" />
+
+        </div>
+    </div>
+
+    <hr class="mb-4">
+
+    <div class="row">
+        <h4 class="col-md-4 mb-3">Situação do débito</h4>
+    </div>
+
+    <div class="row">
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="debitoInicial">Débito Inicial:</label>
+            <input type="text" th:field="*{unidade.debito.valorDoDebitoInicial}" class="form-control"
+                id="debitoInicial" />
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="numParcelas">Número de Parcelas:</label>
+            <input type="text" th:field="*{unidade.debito.numParcelas}" class="form-control" id="numParcelas" />
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="numParcelasPagas">Número de Parcelas Pagas:</label>
+            <input type="text" th:field="*{unidade.debito.numParcelasPagas}" class="form-control"
+                id="numParcelasPagas" />
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="valorDaParcela">Valor da Parcela:</label>
+            <input type="text" th:field="*{unidade.debito.valorDaParcela}" class="form-control" id="valorDaParcela" />
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="valorPago">Total Pago:</label>
+            <input type="text" th:field="*{unidade.debito.valorPago}" class="form-control" id="valorPago" />
+        </div>
+
+        <div class="mb-3 col-md-4 form-group">
+            <label for="valorDoDebitoRestante">Valor Débito Restante:</label>
+            <input type="text" th:field="*{unidade.debito.valorDoDebitoRestante}" class="form-control"
+                id="valorDoDebitoRestante" />
+        </div>
+
+    </div>
+
 </section>
 
 </html>
