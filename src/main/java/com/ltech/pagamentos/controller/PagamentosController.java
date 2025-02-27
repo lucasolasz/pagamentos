@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ltech.pagamentos.model.Pagamento;
 import com.ltech.pagamentos.padrao.CrudController;
+import com.ltech.pagamentos.security.UsuarioAutenticadoProvider;
 import com.ltech.pagamentos.service.MesService;
 import com.ltech.pagamentos.service.PagamentoService;
 import com.ltech.pagamentos.service.UnidadeService;
@@ -21,13 +22,16 @@ public class PagamentosController extends CrudController<Pagamento, Long, Pagame
     private final UnidadeService unidadeService;
     private final MesService mesService;
     private final UsuarioService usuarioService;
+    private final UsuarioAutenticadoProvider usuarioAutenticadoProvider;
 
     public PagamentosController(PagamentoService pagamentoService, UnidadeService unidadeService,
-            MesService mesService, UsuarioService usuarioService) {
+            MesService mesService, UsuarioService usuarioService,
+            UsuarioAutenticadoProvider usuarioAutenticadoProvider) {
         super("pagamentos", pagamentoService, "Pagamentos");
         this.unidadeService = unidadeService;
         this.mesService = mesService;
         this.usuarioService = usuarioService;
+        this.usuarioAutenticadoProvider = usuarioAutenticadoProvider;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class PagamentosController extends CrudController<Pagamento, Long, Pagame
         entity.setDataPagamento(LocalDate.now());
         entity.setAnoReferencia(DataUtil.getAnoNowString());
         entity.setMesReferencia(mesService.recuperarPorId(Long.valueOf(DataUtil.getMesAtual())).orElse(null));
-        // entity.setFuncionarioRecebedor(this.getUsuarioLogin());
+        entity.setFuncionarioRecebedor(usuarioAutenticadoProvider.getUsuarioLogado());
     }
 
     @Override
