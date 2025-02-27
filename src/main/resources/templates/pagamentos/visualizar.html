@@ -12,12 +12,22 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4 form-group">
+                <!-- <div class="col-md-4 form-group">
                     <label for="unidade">Unidade: *</label>
                     <select class="form-control select2" id="unidade">
                         <option value=""></option>
                         <option th:each="unidade : ${listaUnidades}" th:value="${unidade.id}"
                             th:text="${unidade.codUnidade}">
+                        </option>
+                    </select>
+                </div> -->
+
+                <div class="col-md-8 form-group">
+                    <label for="unidade">Unidade: *</label>
+                    <select class="form-control select2" id="unidade">
+                        <option value=""></option>
+                        <option th:each="condominos : ${listaCondominos}" th:value="${condominos.unidade.id}"
+                            th:text="|${condominos.unidade.codUnidade} - ${condominos.nomeCondomino} |">
                         </option>
                     </select>
                 </div>

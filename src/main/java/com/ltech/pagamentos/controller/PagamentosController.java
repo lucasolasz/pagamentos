@@ -12,6 +12,7 @@ import com.ltech.pagamentos.model.Pagamento;
 import com.ltech.pagamentos.padrao.CrudController;
 import com.ltech.pagamentos.security.UsuarioAutenticadoProvider;
 import com.ltech.pagamentos.service.BancoService;
+import com.ltech.pagamentos.service.CondominoService;
 import com.ltech.pagamentos.service.FormaPagamentoService;
 import com.ltech.pagamentos.service.MesService;
 import com.ltech.pagamentos.service.PagamentoService;
@@ -29,11 +30,12 @@ public class PagamentosController extends CrudController<Pagamento, Long, Pagame
     private final UsuarioAutenticadoProvider usuarioAutenticadoProvider;
     private final FormaPagamentoService formaPagamentoService;
     private final BancoService bancoService;
+    private final CondominoService condominoService;
 
     public PagamentosController(PagamentoService pagamentoService, UnidadeService unidadeService,
             MesService mesService, UsuarioService usuarioService,
             UsuarioAutenticadoProvider usuarioAutenticadoProvider, FormaPagamentoService formaPagamentoService,
-            BancoService bancoService) {
+            BancoService bancoService, CondominoService condominoService) {
         super("pagamentos", pagamentoService, "Pagamentos");
         this.unidadeService = unidadeService;
         this.mesService = mesService;
@@ -41,6 +43,7 @@ public class PagamentosController extends CrudController<Pagamento, Long, Pagame
         this.usuarioAutenticadoProvider = usuarioAutenticadoProvider;
         this.formaPagamentoService = formaPagamentoService;
         this.bancoService = bancoService;
+        this.condominoService = condominoService;
     }
 
     @PostMapping("/incluir")
@@ -69,5 +72,6 @@ public class PagamentosController extends CrudController<Pagamento, Long, Pagame
         model.addAttribute("listaBancos", bancoService.recuperarTodos());
         model.addAttribute("listaFormaPagamentos",
                 formaPagamentoService.recuperarTodos());
+        model.addAttribute("listaCondominos", condominoService.recuperarTodos());
     }
 }
