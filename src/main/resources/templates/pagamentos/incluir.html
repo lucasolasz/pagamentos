@@ -4,14 +4,12 @@
 
 <section layout:fragment="camposInputFormulario">
 
+    <input type="hidden" th:field="*{unidade}" class="form-control" id="unidade" />
+
     <div class="row">
         <div class="col-md-4 form-group">
-            <label for="unidade">Unidade: *</label>
-            <select class="form-control select2" id="unidade" th:field="*{unidade}" th:if="${!somenteLeitura}">
-                <option value=""></option>
-                <option th:each="unidade : ${listaUnidades}" th:value="${unidade.id}" th:text="${unidade.codUnidade}">
-                </option>
-            </select>
+            <label for="unidade">Unidade:</label>
+            <input type="text" th:value="${objeto.unidade?.codUnidade}" class="form-control" id="unidade" disabled />
         </div>
 
         <div class="mb-3 col-md-4 form-group">
@@ -19,7 +17,6 @@
             <input type="text" th:field="*{dataPagamento}" id="dataPagamento" class="form-control"
                 data-mask="00/00/0000" data-readonly />
         </div>
-
     </div>
 
     <div class="row">
