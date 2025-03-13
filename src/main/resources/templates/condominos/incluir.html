@@ -93,7 +93,7 @@
 
         <div class="col-md-4 form-group">
             <label for="situacaoCondomino">Situação Condômino: *</label>
-            <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}">
+            <select class="form-control" id="situacaoCondomino" th:field="*{situacaoCondomino}" th:if="${!somenteLeitura}">
                 <option value="">Selecione uma situação</option>
                 <option th:each="situacao : ${listaSituacaoCondomino}" th:value="${situacao.id}"
                     th:text="${situacao.descricao}">
